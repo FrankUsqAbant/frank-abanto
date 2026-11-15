@@ -760,7 +760,7 @@ const carrusel = (function(){
     const t0 = usarCab ? m[2].trim() : d, texto = t0.charAt(0).toUpperCase() + t0.slice(1);
     let tags = (r.topics || []).filter(t => !META.has(t)).map(t => BONITO[t] || t); if (!tags.length && r.language) tags = [r.language];
     const og = `https://opengraph.githubassets.com/1/${USER}/${r.name}`;
-    return `<article class="proy"><a class="marco" href="${esc(url)}" target="_blank" rel="noopener" aria-label="Ver demo de ${esc(titulo)}"><img loading="lazy" src="https://abanto.pages.dev/images/projects/${esc(r.name)}.webp" onerror="this.onerror=null;this.src='${og}'" alt="Captura de ${esc(titulo)}"></a>
+    return `<article class="proy"><a class="marco" href="${esc(url)}" target="_blank" rel="noopener" aria-label="Ver demo de ${esc(titulo)}"><img loading="lazy" src="proyectos/${esc(r.name)}.webp" data-alt="https://abanto.pages.dev/images/projects/${esc(r.name)}.webp|${og}" onerror="var a=this.dataset.alt.split('|'),n=a.shift();this.dataset.alt=a.join('|');if(n)this.src=n" alt="Captura de ${esc(titulo)}"></a>
       <div><span class="n mono">${String(i + 1).padStart(2, '0')} · ${new Date(r.pushed_at).getFullYear()}</span><h3>${esc(titulo)}</h3><p>${esc(texto)}</p>
         <div class="tags">${tags.slice(0, 4).map(t => `<span>${esc(t)}</span>`).join('')}</div>
         <div class="enl"><a href="${esc(url)}" target="_blank" rel="noopener">Ver demo ↗</a><a href="${esc(r.html_url)}" target="_blank" rel="noopener">Código ↗</a></div></div></article>`;
