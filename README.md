@@ -16,10 +16,14 @@ npx serve .
 Parámetros de prueba: `?sinseda` (sin WebGL, para navegadores sin tarjeta gráfica).
 
 ## Publicar
-Cloudflare Pages, carpeta raíz, sin comando de build:
+Producción: **https://frank-abanto.pages.dev** (proyecto `frank-abanto` de Cloudflare Pages, cuenta de Frank).
+
+Subir solo los archivos del sitio desde una carpeta limpia (sin `wrangler.jsonc` ni `.git`):
 ```bash
-npx wrangler pages deploy . --project-name <nombre>
+npx wrangler login            # si la sesión caducó
+npx wrangler pages deploy . --project-name frank-abanto --branch main
 ```
+Notas: wrangler 4.x puede mandar un proyecto *nuevo* a Workers en vez de Pages; por eso el proyecto se creó con `--force`. Al existir ya, los despliegues van directos a Pages. Si wrangler usa un ID de cuenta antiguo, fijar `CLOUDFLARE_ACCOUNT_ID`.
 
 ## Notas
 - Tipografías: Instrument Serif, Inter y JetBrains Mono (Google Fonts); la firma usa La Belle Aurore recortada a "Frank Abanto". Si cambias el texto de la firma, actualiza el parámetro `text=` del enlace.
