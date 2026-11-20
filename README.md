@@ -33,19 +33,6 @@ Soy **Frank Abanto**, desarrollador web radicado en Cajamarca, Perú. Construyo 
 
 ---
 
-## 🚀 Proyectos Destacados en el Portafolio
-
-La web se sincroniza automáticamente con mi API de GitHub para mostrar proyectos con la etiqueta `portfolio`:
-
-| Proyecto | Descripción | Stack | Demo |
-|---|---|---|:---:|
-| **Chavez Originals** | Tienda de calzado con vitrina interactiva, catálogo administrable en Supabase y pedidos por WhatsApp. | React, Supabase, Tailwind, Vite | [Ver Demo ↗](https://chavez-originals.pages.dev) |
-| **Hostal Aguilar** | Plataforma para hospedaje con concepto *«la luz encendida»*, reservas por WhatsApp y panel. | React, Supabase, Tailwind, Vite | [Ver Demo ↗](https://hostal-aguilar.pages.dev) |
-| **JIRÉH Pastelería** | Catálogo con módulo interactivo *«Arma tu torta»* en vivo y pedidos directos por WhatsApp. | React, Supabase, Tailwind, Vite | [Ver Demo ↗](https://jireh-pasteleria.pages.dev) |
-| **Concepto Un Día** | Experimento visual con cielo interactivo en WebGL según la hora y posición del sol. | HTML5, Canvas, WebGL Shader | [Ver Demo ↗](https://concepto-un-dia.pages.dev) |
-
----
-
 ## 🛠️ Arquitectura y Tecnologías del Sitio
 
 Página construida en un **único archivo estático (`index.html`)** sin build step ni dependencias externas:
