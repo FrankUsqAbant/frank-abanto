@@ -3,13 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="data:,">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="logo.svg">
 <title>Frank Abanto — Software e IA hechos a tu medida</title>
 <meta name="description" content="Frank Abanto: páginas web, agentes de IA, automatización e integraciones hechos a la medida de tu negocio. Agenda una llamada de 30 minutos.">
 <meta name="theme-color" content="#0e0d0b">
 <meta property="og:type" content="website"><meta property="og:locale" content="es_PE">
 <meta property="og:title" content="Frank Abanto — Software e IA hechos a tu medida">
 <meta property="og:description" content="Conecto tus herramientas, automatizo tus procesos y pongo la inteligencia artificial a trabajar para ti.">
+<meta property="og:image" content="https://frank-abanto.pages.dev/frank-avatar.webp">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -35,6 +38,9 @@ img{display:block;max-width:100%}
   padding:13px 20px;border-radius:999px;text-decoration:none;box-shadow:0 10px 30px -10px rgba(0,0,0,.6);
   opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .35s,transform .35s}
 .flota.ver{opacity:1;transform:none;pointer-events:auto}
+.marca-nav{display:inline-flex;align-items:center;gap:11px;text-decoration:none;color:inherit}
+.logo-nav{width:32px;height:32px;border-radius:8px;display:block;flex-shrink:0;transition:transform .25s ease}
+.marca-nav:hover .logo-nav{transform:scale(1.08)}
 .firma{font-family:"La Belle Aurore",cursive;font-size:26px;text-decoration:none}
 .nav nav{display:flex;gap:30px;font-size:14px}
 .nav nav a{text-decoration:none;opacity:.75}
@@ -291,9 +297,9 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
 <div id="telon" aria-hidden="true"><b><span id="cuenta">0</span><small>CM · TOMANDO MEDIDAS</small></b><i></i></div>
 <noscript><style>#telon{display:none}</style></noscript>
 <header class="nav">
-  <a class="firma" href="#inicio">Frank Abanto</a>
+  <a class="marca-nav" href="#inicio" aria-label="Frank Abanto - Inicio"><img src="logo.svg" alt="" width="32" height="32" class="logo-nav"><span class="firma">Frank Abanto</span></a>
   <nav aria-label="Principal"><a href="#servicios">Servicios</a><a href="#proceso">Proceso</a><a href="#proyectos">Proyectos</a></nav>
-  <a class="pill" href="https://cal.com/franquer-abanto-i45gjj/frank.pages.dev" target="_blank" rel="noopener">Agendar llamada ↗</a>
+  <a class="pill" href="https://cal.com/franquer-abanto-i45gjj/frank.pages.dev" target="_blank" rel="noopener noreferrer">Agendar llamada ↗</a>
 </header>
 <div class="visor" id="visor" aria-hidden="true">
   <div class="v"><i class="b t"></i><i class="b l1"></i><i class="b l2"></i><i class="b bt"></i></div>
@@ -303,7 +309,7 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
   <div class="v"><div class="ba"><b style="--h:34%"></b><b style="--h:52%"></b><b style="--h:44%"></b><b style="--h:70%"></b><b style="--h:92%"></b></div></div>
   <div class="v"><div class="h24"><em>24/7</em><span>en línea · responde en segundos</span></div></div>
 </div>
-<a class="flota" id="flota" href="https://cal.com/franquer-abanto-i45gjj/frank.pages.dev" target="_blank" rel="noopener">Agendar llamada ↗</a>
+<a class="flota" id="flota" href="https://cal.com/franquer-abanto-i45gjj/frank.pages.dev" target="_blank" rel="noopener noreferrer">Agendar llamada ↗</a>
 
 <main>
 <!-- 1 · HERO -->
@@ -369,27 +375,27 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
     <p class="etq mono">Proyectos y laboratorio</p>
     <div class="cab-proy">
       <h2 class="titular sube">Ya lo <em>probé</em> en lo mío.</h2>
-      <a href="https://github.com/FrankUsqAbant" target="_blank" rel="noopener">Ver todos en GitHub ↗</a>
+      <a href="https://github.com/FrankUsqAbant" target="_blank" rel="noopener noreferrer">Ver todos en GitHub ↗</a>
     </div>
     <div class="carrusel" role="region" aria-roledescription="carrusel" aria-label="Proyectos">
     <div class="pistaP" id="lista-proy" tabindex="0" aria-live="polite">
     <article class="proy">
-      <a class="marco" href="https://chavez-originals.pages.dev" target="_blank" rel="noopener" aria-label="Ver demo de Chavez Originals"><img loading="lazy" src="https://abanto.pages.dev/images/projects/chavez-originals.webp" alt="Captura de Chavez Originals"></a>
+      <a class="marco" href="https://chavez-originals.pages.dev" target="_blank" rel="noopener noreferrer" aria-label="Ver demo de Chavez Originals"><img loading="lazy" src="https://abanto.pages.dev/images/projects/chavez-originals.webp" alt="Captura de Chavez Originals"></a>
       <div><span class="n mono">01 · tienda</span><h3>Chavez Originals</h3><p>Tienda de calzado con vitrina interactiva, catálogo administrable y pedidos por WhatsApp.</p>
         <div class="tags"><span>React</span><span>Supabase</span><span>Tailwind CSS</span></div>
-        <div class="enl"><a href="https://chavez-originals.pages.dev" target="_blank" rel="noopener">Ver demo ↗</a></div></div>
+        <div class="enl"><a href="https://chavez-originals.pages.dev" target="_blank" rel="noopener noreferrer">Ver demo ↗</a></div></div>
     </article>
     <article class="proy">
-      <a class="marco" href="https://hostal-aguilar.pages.dev" target="_blank" rel="noopener" aria-label="Ver demo de Hostal Aguilar"><img loading="lazy" src="https://abanto.pages.dev/images/projects/hostal-aguilar.webp" alt="Captura de Hostal Aguilar"></a>
+      <a class="marco" href="https://hostal-aguilar.pages.dev" target="_blank" rel="noopener noreferrer" aria-label="Ver demo de Hostal Aguilar"><img loading="lazy" src="https://abanto.pages.dev/images/projects/hostal-aguilar.webp" alt="Captura de Hostal Aguilar"></a>
       <div><span class="n mono">02 · hospedaje</span><h3>Hostal Aguilar</h3><p>Hospedaje con reservas por WhatsApp y panel de administración.</p>
         <div class="tags"><span>React</span><span>Supabase</span><span>Tailwind CSS</span></div>
-        <div class="enl"><a href="https://hostal-aguilar.pages.dev" target="_blank" rel="noopener">Ver demo ↗</a></div></div>
+        <div class="enl"><a href="https://hostal-aguilar.pages.dev" target="_blank" rel="noopener noreferrer">Ver demo ↗</a></div></div>
     </article>
     <article class="proy">
-      <a class="marco" href="https://jireh-pasteleria.pages.dev" target="_blank" rel="noopener" aria-label="Ver demo de JIRÉH Pastelería"><img loading="lazy" src="https://abanto.pages.dev/images/projects/jireh-pasteleria.webp" alt="Captura de JIRÉH Pastelería"></a>
+      <a class="marco" href="https://jireh-pasteleria.pages.dev" target="_blank" rel="noopener noreferrer" aria-label="Ver demo de JIRÉH Pastelería"><img loading="lazy" src="https://abanto.pages.dev/images/projects/jireh-pasteleria.webp" alt="Captura de JIRÉH Pastelería"></a>
       <div><span class="n mono">03 · pastelería</span><h3>JIRÉH Pastelería</h3><p>Catálogo de tortas con «Arma tu torta» en vivo y pedidos por WhatsApp.</p>
         <div class="tags"><span>React</span><span>Supabase</span><span>Tailwind CSS</span></div>
-        <div class="enl"><a href="https://jireh-pasteleria.pages.dev" target="_blank" rel="noopener">Ver demo ↗</a></div></div>
+        <div class="enl"><a href="https://jireh-pasteleria.pages.dev" target="_blank" rel="noopener noreferrer">Ver demo ↗</a></div></div>
     </article>
     </div>
     <div class="ctrlP"><span class="cuenta mono" id="cuentaP">01 / 03</span><div class="barra" aria-hidden="true"><i id="barraP"></i></div>
@@ -413,7 +419,7 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
       </div>
     </div>
     <div class="fila">
-      <a class="btn" href="https://cal.com/franquer-abanto-i45gjj/frank.pages.dev" target="_blank" rel="noopener">Agendar llamada <span aria-hidden="true">↗</span></a>
+      <a class="btn" href="https://cal.com/franquer-abanto-i45gjj/frank.pages.dev" target="_blank" rel="noopener noreferrer">Agendar llamada <span aria-hidden="true">↗</span></a>
       <span>Te tomo las medidas de <b id="medidasDe">tu negocio</b> y lo vemos juntos. Sin compromiso.</span>
     </div>
   </div>
@@ -421,8 +427,8 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
 </main>
 
 <footer>
-  <a class="firma" href="#inicio">Frank Abanto</a>
-  <nav aria-label="Pie"><a href="https://github.com/FrankUsqAbant" target="_blank" rel="noopener">GitHub</a><a href="#servicios">Servicios</a><a href="#proyectos">Proyectos</a></nav>
+  <a class="marca-nav" href="#inicio" aria-label="Frank Abanto - Inicio"><img src="logo.svg" alt="" width="30" height="30" class="logo-nav"><span class="firma">Frank Abanto</span></a>
+  <nav aria-label="Pie"><a href="https://github.com/FrankUsqAbant" target="_blank" rel="noopener noreferrer">GitHub</a><a href="#servicios">Servicios</a><a href="#proyectos">Proyectos</a></nav>
   <span>© 2026 · Software e IA hechos a tu medida</span>
 </footer>
 
@@ -754,16 +760,17 @@ const carrusel = (function(){
   if (!lista.length) return;
   const html = lista.map((r, i) => {
     const url = /^https?:/.test(r.homepage) ? r.homepage : 'https://' + r.homepage;
+    const codeUrl = /^https?:/.test(r.html_url) ? r.html_url : `https://github.com/${USER}/${r.name}`;
     const d = (r.description || '').trim(), m = d.match(/^(.+?)\s*(?:\(.*?\))?\s*(?:—|:|\s-\s)\s*(.+)$/);
     const cab = m ? m[1].trim() : '', usarCab = m && cab.split(/\s+/).length <= 4 && norm(cab.split(/\s+/)[0]) === norm(r.name.split(/[-_]/)[0]);
     const titulo = usarCab ? cab : r.name.split(/[-_]/).map(w => w[0].toUpperCase() + w.slice(1)).join(' ');
     const t0 = usarCab ? m[2].trim() : d, texto = t0.charAt(0).toUpperCase() + t0.slice(1);
     let tags = (r.topics || []).filter(t => !META.has(t)).map(t => BONITO[t] || t); if (!tags.length && r.language) tags = [r.language];
     const og = `https://opengraph.githubassets.com/1/${USER}/${r.name}`;
-    return `<article class="proy"><a class="marco" href="${esc(url)}" target="_blank" rel="noopener" aria-label="Ver demo de ${esc(titulo)}"><img loading="lazy" src="proyectos/${esc(r.name)}.webp" data-alt="https://abanto.pages.dev/images/projects/${esc(r.name)}.webp|${og}" onerror="var a=this.dataset.alt.split('|'),n=a.shift();this.dataset.alt=a.join('|');if(n)this.src=n" alt="Captura de ${esc(titulo)}"></a>
+    return `<article class="proy"><a class="marco" href="${esc(url)}" target="_blank" rel="noopener noreferrer" aria-label="Ver demo de ${esc(titulo)}"><img loading="lazy" src="proyectos/${esc(r.name)}.webp" data-alt="https://abanto.pages.dev/images/projects/${esc(r.name)}.webp|${og}" onerror="var a=this.dataset.alt.split('|'),n=a.shift();this.dataset.alt=a.join('|');if(n)this.src=n" alt="Captura de ${esc(titulo)}"></a>
       <div><span class="n mono">${String(i + 1).padStart(2, '0')} · ${new Date(r.pushed_at).getFullYear()}</span><h3>${esc(titulo)}</h3><p>${esc(texto)}</p>
         <div class="tags">${tags.slice(0, 4).map(t => `<span>${esc(t)}</span>`).join('')}</div>
-        <div class="enl"><a href="${esc(url)}" target="_blank" rel="noopener">Ver demo ↗</a><a href="${esc(r.html_url)}" target="_blank" rel="noopener">Código ↗</a></div></div></article>`;
+        <div class="enl"><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Ver demo ↗</a><a href="${esc(codeUrl)}" target="_blank" rel="noopener noreferrer">Código ↗</a></div></div></article>`;
   }).join('');
   document.getElementById('lista-proy').innerHTML = html;
   document.querySelectorAll('#lista-proy .marco').forEach(inclinar);

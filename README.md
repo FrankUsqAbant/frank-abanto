@@ -1,30 +1,87 @@
-# Frank Abanto — Software e IA hechos a tu medida
+<div align="center">
 
-Página de inicio del portafolio. Es un sitio **estático de un solo archivo** (`index.html`), sin build ni dependencias.
+  <img src="./logo.svg" alt="Frank Abanto Logo" width="64" height="64" />
 
-## Qué incluye
-- Hero con titular bordado con puntadas en canvas y seda en WebGL (se adapta solo a equipos lentos).
-- Manifiesto, servicios, proceso, proyectos y cierre con etiqueta bordada.
-- **Proyectos automáticos:** se leen de GitHub (`FrankUsqAbant`). Aparece todo repo público con el tema `portfolio` **y** una web publicada (campo *Website*). El tema `featured` lo pone primero. `abanto.dev` se excluye. Las capturas se buscan en `abanto.pages.dev/images/projects/<repo>.webp` y, si no existe, se usa la tarjeta de GitHub.
-- Carrusel con autodesplazamiento (pausa con cursor, foco, toque, pestaña oculta, fuera de pantalla o movimiento reducido).
-- Botones "Agendar llamada" hacia Cal.com.
+  # Frank Abanto — Software e IA a Medida
 
-## Probar en local
+  **Portafolio web minimalista, de alto rendimiento y experiencia interactiva artesanal.**
+
+  [![Cloudflare Pages](https://img.shields.io/badge/Deploy-Cloudflare%20Pages-f38020?style=flat-square&logo=cloudflare)](https://frank-abanto.pages.dev)
+  [![Stack](https://img.shields.io/badge/Stack-HTML5%20%7C%20CSS3%20%7C%20WebGL-black?style=flat-square)](https://frank-abanto.pages.dev)
+  [![Performance](https://img.shields.io/badge/Dependencies-0%20(Pure%20Vanilla)-success?style=flat-square)](https://frank-abanto.pages.dev)
+  [![Status](https://img.shields.io/badge/Live-frank--abanto.pages.dev-blue?style=flat-square)](https://frank-abanto.pages.dev)
+
+  <br />
+
+  <img src="./hero-preview.webp" alt="Hero Preview Frank Abanto" width="100%" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
+
+</div>
+
+---
+
+## 📌 Resumen
+
+Sitio web estático de arquitectura ultra ligera (**un solo archivo HTML**, sin compiladores ni dependencias externas), diseñado bajo el concepto de **sastrería digital**: soluciones de software, automatizaciones y agentes de inteligencia artificial construidos a la medida exacta de cada negocio.
+
+🌐 **Sitio en vivo:** [frank-abanto.pages.dev](https://frank-abanto.pages.dev)
+
+---
+
+## ✨ Características Principales
+
+- **Hero Artesanal en WebGL & Canvas:** Titular interactivo bordado con física de puntadas dinámicas y fondo de seda en WebGL sensible al cursor (con auto-adaptación para dispositivos lentos).
+- **Sincronización Automática con GitHub:** Consulta la API pública de `@FrankUsqAbant` para listar en tiempo real proyectos etiquetados con `portfolio` y despliegue activo.
+- **Carrusel Inteligente:** Desplazamiento táctil y arrastre con mouse, pausa automática por interacción, cambio de pestaña o accesibilidad (`prefers-reduced-motion`).
+- **Seguridad y Accesibilidad:** Enlaces externos con aislamiento de seguridad (`rel="noopener noreferrer"`), encabezados HTTP endurecidos (`_headers`) y navegación accesible por teclado.
+- **Reserva Directa:** Integración sin fricción con Cal.com para agendar llamadas de diagnóstico.
+- **Rendimiento Máximo:** Carga instantánea, recursos vectoriales en SVG y tipografías optimizadas.
+
+---
+
+## 📂 Estructura del Repositorio
+
+```text
+├── index.html            # Aplicación completa (HTML, CSS y JavaScript puro)
+├── logo.svg              # Isotipo / logotipo vectorial de marca
+├── favicon.svg           # Favicon SVG escalable y ligero
+├── frank-avatar.webp     # Fotografía de perfil optimizada
+├── hero-preview.webp     # Captura de alta resolución del Hero
+├── _headers              # Cabeceras de seguridad y políticas de caché (Cloudflare)
+└── proyectos/            # Capturas locales de respaldo para proyectos
+```
+
+---
+
+## 🚀 Inicio Rápido (Local)
+
+Para previsualizar localmente sin necesidad de configurar entornos complejos:
+
 ```bash
+# Iniciar servidor estático ligero
 npx serve .
 ```
-Parámetros de prueba: `?sinseda` (sin WebGL, para navegadores sin tarjeta gráfica).
 
-## Publicar
-Producción: **https://frank-abanto.pages.dev** (proyecto `frank-abanto` de Cloudflare Pages, cuenta de Frank).
+> **Tip:** Puedes probar la versión sin shaders WebGL agregando `?sinseda` en la URL (ideal para pruebas en equipos con bajo rendimiento gráfico).
 
-Subir solo los archivos del sitio desde una carpeta limpia (sin `wrangler.jsonc` ni `.git`):
+---
+
+## 🚢 Despliegue en Producción
+
+El proyecto está configurado para desplegarse instantáneamente en **Cloudflare Pages**:
+
 ```bash
-npx wrangler login            # si la sesión caducó
+# 1. Iniciar sesión en Cloudflare (si es necesario)
+npx wrangler login
+
+# 2. Desplegar carpeta actual en Cloudflare Pages
 npx wrangler pages deploy . --project-name frank-abanto --branch main
 ```
-Notas: wrangler 4.x puede mandar un proyecto *nuevo* a Workers en vez de Pages; por eso el proyecto se creó con `--force`. Al existir ya, los despliegues van directos a Pages. Si wrangler usa un ID de cuenta antiguo, fijar `CLOUDFLARE_ACCOUNT_ID`.
 
-## Notas
-- Tipografías: Instrument Serif, Inter y JetBrains Mono (Google Fonts); la firma usa La Belle Aurore recortada a "Frank Abanto". Si cambias el texto de la firma, actualiza el parámetro `text=` del enlace.
-- `frank-avatar.webp` es un recorte de 96 px del retrato.
+---
+
+## 🛠️ Tecnologías
+
+- **Core:** HTML5 Semántico, CSS3 Moderno (Custom Properties, CSS Grid, Fluid Typography).
+- **Gráficos & Efectos:** Canvas 2D API + Shaders WebGL Fragment.
+- **Fuentes:** *Instrument Serif*, *Inter*, *JetBrains Mono* y *La Belle Aurore* (Google Fonts).
+- **Hosting:** Cloudflare Pages (Edge CDN global con compresión Brotli automática).
