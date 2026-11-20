@@ -2,88 +2,91 @@
 
   <img src="./logo.svg" alt="Frank Abanto Logo" width="64" height="64" />
 
-  # Frank Abanto — Software e IA a Medida
+  # Frank Abanto — Página Personal & Portafolio
 
-  **Portafolio web minimalista, de alto rendimiento y experiencia interactiva artesanal.**
+  **Desarrollador Web & Especialista en Automatizaciones e IA · Cajamarca, Perú 🇵🇪**
 
-  [![Cloudflare Pages](https://img.shields.io/badge/Deploy-Cloudflare%20Pages-f38020?style=flat-square&logo=cloudflare)](https://frank-abanto.pages.dev)
-  [![Stack](https://img.shields.io/badge/Stack-HTML5%20%7C%20CSS3%20%7C%20WebGL-black?style=flat-square)](https://frank-abanto.pages.dev)
-  [![Performance](https://img.shields.io/badge/Dependencies-0%20(Pure%20Vanilla)-success?style=flat-square)](https://frank-abanto.pages.dev)
-  [![Status](https://img.shields.io/badge/Live-frank--abanto.pages.dev-blue?style=flat-square)](https://frank-abanto.pages.dev)
+  [![Sitio Web](https://img.shields.io/badge/Web-frank--abanto.pages.dev-22d3ee?style=flat-square&logo=cloudflare)](https://frank-abanto.pages.dev)
+  [![GitHub](https://img.shields.io/badge/GitHub-FrankUsqAbant-181717?style=flat-square&logo=github)](https://github.com/FrankUsqAbant)
+  [![X / Twitter](https://img.shields.io/badge/X-@FrankUsqAbanto-000000?style=flat-square&logo=x)](https://x.com/FrankUsqAbanto)
+  [![Agenda](https://img.shields.io/badge/Cal.com-Agendar%20Llamada-ff5a36?style=flat-square)](https://cal.com/franquer-abanto-i45gjj/frank.pages.dev)
 
   <br />
 
   <a href="https://frank-abanto.pages.dev" target="_blank" rel="noopener noreferrer">
-    <img src="./.github/assets/hero-preview.webp" alt="Hero Preview — Haz clic para ver el sitio en vivo" width="100%" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
+    <img src="./.github/assets/hero-preview.webp" alt="Hero Preview — Clic para abrir el sitio en vivo" width="100%" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
   </a>
 
 </div>
 
 ---
 
-## 📌 Resumen
+## 👨‍💻 Sobre Mí
 
-Sitio web estático de arquitectura ultra ligera (**un solo archivo HTML**, sin compiladores ni dependencias externas), diseñado bajo el concepto de **sastrería digital**: soluciones de software, automatizaciones y agentes de inteligencia artificial construidos a la medida exacta de cada negocio.
+Soy **Frank Abanto**, desarrollador web radicado en Cajamarca, Perú. Construyo sitios web de alto impacto, herramientas a medida y automatizaciones de procesos con IA para negocios locales y proyectos digitales.
 
-🌐 **Sitio en vivo:** [frank-abanto.pages.dev](https://frank-abanto.pages.dev)
+> *"No vendo plantillas. Tomo las medidas de tu negocio —cómo vendes, cómo respondes, qué haces a mano— y construyo solo lo que le queda bien."*
 
----
-
-## ✨ Características Principales
-
-- **Hero Artesanal en WebGL & Canvas:** Titular interactivo bordado con física de puntadas dinámicas y fondo de seda en WebGL sensible al cursor (con auto-adaptación para dispositivos lentos).
-- **Sincronización Automática con GitHub:** Consulta la API pública de `@FrankUsqAbant` para listar en tiempo real proyectos etiquetados con `portfolio` y despliegue activo.
-- **Carrusel Inteligente:** Desplazamiento táctil y arrastre con mouse, pausa automática por interacción, cambio de pestaña o accesibilidad (`prefers-reduced-motion`).
-- **Seguridad y Accesibilidad:** Enlaces externos con aislamiento de seguridad (`rel="noopener noreferrer"`), encabezados HTTP endurecidos (`_headers`) y navegación accesible por teclado.
-- **Reserva Directa:** Integración sin fricción con Cal.com para agendar llamadas de diagnóstico.
-- **Rendimiento Máximo:** Carga instantánea, recursos vectoriales en SVG y tipografías optimizadas.
+- 🌐 **Especialidad:** Sitios web modernos, catálogos administrables, tiendas con pedidos por WhatsApp.
+- 🤖 **IA & Automatizaciones:** Asistentes y bots con IA (Gemini API, Telegram), workflows en n8n, conexión de APIs y bases de datos (Supabase).
+- ⚡ **Filosofía:** Cero código innecesario, máxima velocidad de carga, diseño cuidado al detalle y responsive en todo dispositivo.
 
 ---
 
-## 📂 Estructura del Repositorio
+## 🚀 Proyectos Destacados en el Portafolio
+
+La web se sincroniza automáticamente con mi API de GitHub para mostrar proyectos con la etiqueta `portfolio`:
+
+| Proyecto | Descripción | Stack | Demo |
+|---|---|---|:---:|
+| **Chavez Originals** | Tienda de calzado con vitrina interactiva, catálogo administrable en Supabase y pedidos por WhatsApp. | React, Supabase, Tailwind, Vite | [Ver Demo ↗](https://chavez-originals.pages.dev) |
+| **Hostal Aguilar** | Plataforma para hospedaje con concepto *«la luz encendida»*, reservas por WhatsApp y panel. | React, Supabase, Tailwind, Vite | [Ver Demo ↗](https://hostal-aguilar.pages.dev) |
+| **JIRÉH Pastelería** | Catálogo con módulo interactivo *«Arma tu torta»* en vivo y pedidos directos por WhatsApp. | React, Supabase, Tailwind, Vite | [Ver Demo ↗](https://jireh-pasteleria.pages.dev) |
+| **Concepto Un Día** | Experimento visual con cielo interactivo en WebGL según la hora y posición del sol. | HTML5, Canvas, WebGL Shader | [Ver Demo ↗](https://concepto-un-dia.pages.dev) |
+
+---
+
+## 🛠️ Arquitectura y Tecnologías del Sitio
+
+Página construida en un **único archivo estático (`index.html`)** sin build step ni dependencias externas:
+
+- **Efectos Visuales:** Canvas 2D interactivo (física de puntadas bordadas) y WebGL Fragment Shader (seda viva con iluminación reactiva al cursor).
+- **Auto-adaptación:** Detecta equipos lentos o preferencias de reducción de movimiento (`prefers-reduced-motion`) para ahorrar batería y recursos.
+- **Seguridad:** Aislamiento con `rel="noopener noreferrer"`, sanitización estricta de URLs de la API de GitHub y cabeceras reforzadas (`_headers`).
+- **Despliegue:** Cloudflare Pages (Edge CDN con compresión Brotli y carga instantánea).
+
+---
+
+## 📂 Organización del Repositorio
 
 ```text
-├── index.html            # Aplicación completa (HTML, CSS y JavaScript puro)
-├── logo.svg              # Isotipo / logotipo vectorial de marca
-├── favicon.svg           # Favicon SVG escalable y ligero
+├── .github/
+│   └── assets/           # Recursos visuales del README (captura Hero)
+├── proyectos/            # Capturas de proyectos en formato WebP
+├── index.html            # Sitio web completo (HTML, CSS y JS integrado)
+├── logo.svg              # Isotipo artesanal oficial
+├── favicon.svg           # Favicon vectorial escalable
 ├── frank-avatar.webp     # Fotografía de perfil optimizada
-├── hero-preview.webp     # Captura de alta resolución del Hero
-├── _headers              # Cabeceras de seguridad y políticas de caché (Cloudflare)
-└── proyectos/            # Capturas locales de respaldo para proyectos
+├── _headers              # Cabeceras de seguridad y caché HTTP
+└── README.md             # Documentación principal
 ```
 
 ---
 
-## 🚀 Inicio Rápido (Local)
-
-Para previsualizar localmente sin necesidad de configurar entornos complejos:
+## 💻 Desarrollo Local
 
 ```bash
-# Iniciar servidor estático ligero
+# Servir localmente sin dependencias
 npx serve .
 ```
 
-> **Tip:** Puedes probar la versión sin shaders WebGL agregando `?sinseda` en la URL (ideal para pruebas en equipos con bajo rendimiento gráfico).
+*Parámetro útil:* `?sinseda` desactiva WebGL para pruebas en entornos sin GPU.
 
 ---
 
-## 🚢 Despliegue en Producción
+## 📬 Contacto
 
-El proyecto está configurado para desplegarse instantáneamente en **Cloudflare Pages**:
-
-```bash
-# 1. Iniciar sesión en Cloudflare (si es necesario)
-npx wrangler login
-
-# 2. Desplegar carpeta actual en Cloudflare Pages
-npx wrangler pages deploy . --project-name frank-abanto --branch main
-```
-
----
-
-## 🛠️ Tecnologías
-
-- **Core:** HTML5 Semántico, CSS3 Moderno (Custom Properties, CSS Grid, Fluid Typography).
-- **Gráficos & Efectos:** Canvas 2D API + Shaders WebGL Fragment.
-- **Fuentes:** *Instrument Serif*, *Inter*, *JetBrains Mono* y *La Belle Aurore* (Google Fonts).
-- **Hosting:** Cloudflare Pages (Edge CDN global con compresión Brotli automática).
+- 🌐 **Web:** [frank-abanto.pages.dev](https://frank-abanto.pages.dev)
+- 🐙 **GitHub:** [@FrankUsqAbant](https://github.com/FrankUsqAbant)
+- 🐦 **X (Twitter):** [@FrankUsqAbanto](https://x.com/FrankUsqAbanto)
+- 📅 **Reunión:** [Agendar llamada de 30 minutos](https://cal.com/franquer-abanto-i45gjj/frank.pages.dev)
