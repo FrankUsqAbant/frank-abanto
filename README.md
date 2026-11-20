@@ -13,7 +13,9 @@
 
   <br />
 
-  <img src="./hero-preview.webp" alt="Hero Preview Frank Abanto" width="100%" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
+  <a href="https://frank-abanto.pages.dev" target="_blank" rel="noopener noreferrer">
+    <img src="./.github/assets/hero-preview.webp" alt="Hero Preview — Haz clic para ver el sitio en vivo" width="100%" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
+  </a>
 
 </div>
 
