@@ -2,7 +2,7 @@
 import { chromium, devices } from 'playwright';
 import fs from 'node:fs';
 
-const URL = (process.env.URL || 'http://localhost:8080/') + 'probador.html';
+const URL = (process.env.URL || 'http://localhost:8080/') + (fs.existsSync('sitio/probador.html') ? 'probador.html' : '');
 const rep = [];
 const log = (s) => { rep.push(s); console.log(s); };
 const browser = await chromium.launch({ args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader'] });
@@ -45,6 +45,12 @@ for (const [nombre, opts] of casos) {
   log(`${nombre} · recepcionista: ${JSON.stringify(fin)}`);
   await page.locator('#recep').scrollIntoViewIfNeeded();
   await page.screenshot({ path: `out/p-${nombre}-9-recep.png` });
+  // botón Escríbeme del encabezado: abre la recepcionista sin muestra
+  await page.goto(URL, { waitUntil: 'networkidle' }); await page.waitForTimeout(2500);
+  const pill = page.locator('.nav .pill[data-recep]');
+  if (await pill.count()) { await page.evaluate(() => window.scrollTo(0, 0)); await page.locator('[data-recep]:visible').first().click(); await page.waitForTimeout(1500);
+    log(`{nombre} · Escríbeme: {JSON.stringify(await page.evaluate(() => ({ abierta: !document.getElementById('recep').hidden, foco: document.activeElement.id, saludo: document.querySelector('#msjs .burbuja')?.textContent })))}`);
+    await page.screenshot({ path: `out/p-{nombre}-8-escribeme.png` }); }
   // teclado
   await page.goto(URL, { waitUntil: 'networkidle' });
   const foco = [];

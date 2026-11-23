@@ -33,7 +33,7 @@ jobs:
         run: npx lighthouse "$URL" --preset=desktop --quiet --chrome-flags="--headless=new --no-sandbox" --output=json --output-path=out/lh-desktop.json || true
       - run: node .github/auditoria.mjs
       - name: Probador
-        run: if [ -f sitio/probador.html ]; then node .github/probador.mjs; fi
+        run: if [ -f sitio/probador.html ] || grep -q 'id="probador"' sitio/index.html; then node .github/probador.mjs; fi
       - uses: actions/upload-artifact@v4
         with:
           name: auditoria
