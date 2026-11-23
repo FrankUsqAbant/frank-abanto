@@ -35,7 +35,7 @@ for (const [nombre, opts] of casos) {
       desborde: document.documentElement.scrollWidth - innerWidth,
     }));
     log(`${nombre} · ${neg} · ${tipo}: ${JSON.stringify(estado)}`);
-    await page.locator('#tela').scrollIntoViewIfNeeded();
+    await page.locator((await page.locator('#pbTela').count()) ? '#pbTela' : '#tela').scrollIntoViewIfNeeded();
     await page.screenshot({ path: `out/p-${nombre}-${++k}-${tipo}.png` });
   }
   // recepcionista: recorrer el guion de cotizar
