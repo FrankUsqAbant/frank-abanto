@@ -770,8 +770,11 @@ const carrusel = (function(){
       try { localStorage.setItem(CLAVE, JSON.stringify({t: Date.now(), d: repos})); } catch (e) {}
     } catch (e) { return; }                                   // sin red o límite de GitHub: queda el HTML de respaldo
   }
+  // rotan: en cada visita cambia el orden. Los "featured" siguen yendo primero, pero barajados entre ellos.
+  const azar = new Map();
   const lista = repos.filter(r => !r.fork && !r.archived && !EXCLUIR.has(r.name) && r.homepage && (r.topics || []).includes('portfolio'))
-    .sort((a, b) => ((b.topics.includes('featured')) - (a.topics.includes('featured'))) || (new Date(b.pushed_at) - new Date(a.pushed_at)));
+    .map(r => (azar.set(r.name, Math.random()), r))
+    .sort((a, b) => ((b.topics.includes('featured')) - (a.topics.includes('featured'))) || (azar.get(a.name) - azar.get(b.name)));
   if (!lista.length) return;
   const html = lista.map((r, i) => {
     const url = /^https?:/.test(r.homepage) ? r.homepage : 'https://' + r.homepage;
