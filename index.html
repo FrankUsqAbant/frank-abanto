@@ -568,11 +568,13 @@ if (!quieto) document.fonts.load('italic 400 100px "Instrument Serif"').then(() 
     }
   });
   etiqueta.preparar();
-  if (!location.search.includes('sinseda')) seda(palabras);   // el parámetro solo sirve para pruebas sin tarjeta gráfica
   /* el telón cuenta hasta 100 y se levanta; entonces empieza a coserse el titular */
   const telon = document.getElementById('telon'), cuenta = document.getElementById('cuenta'), falta = Math.max(0, 1250 - performance.now());
   const c0 = performance.now(), ci = setInterval(() => { const q = Math.min(1, (performance.now() - c0) / (falta || 1)); cuenta.textContent = Math.round(q * q * (3 - 2 * q) * 100); if (q >= 1) clearInterval(ci); }, 30);
-  setTimeout(() => { cuenta.textContent = 100; telon.classList.add('fuera'); setTimeout(heroB.preparar, 380); }, falta + 120);
+  setTimeout(() => {
+    cuenta.textContent = 100; telon.classList.add('fuera'); setTimeout(heroB.preparar, 380);
+    if (!location.search.includes('sinseda')) seda(palabras);   // la seda nace al subir el telón: antes estaba tapada y solo gastaba. ?sinseda = pruebas sin tarjeta gráfica
+  }, falta + 120);
   let pausa; campo.addEventListener('input', () => { txt.textContent = campo.value.trim() || 'tu negocio'; document.getElementById('medidasDe').textContent = txt.textContent; clearTimeout(pausa); pausa = setTimeout(etiqueta.preparar, 260); });
   raiz.classList.add('bordado');
 });
@@ -631,6 +633,7 @@ void main(){
   for (const k of [gl.TEXTURE_WRAP_S, gl.TEXTURE_WRAP_T]) gl.texParameteri(gl.TEXTURE_2D, k, gl.CLAMP_TO_EDGE);
   for (const k of [gl.TEXTURE_MIN_FILTER, gl.TEXTURE_MAG_FILTER]) gl.texParameteri(gl.TEXTURE_2D, k, gl.LINEAR);
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+  const tactil = !matchMedia('(hover:hover) and (pointer:fine)').matches;
   let W = 1, H = 1, asp = 1, vis = true, raf = 0, factor = 1, parada = false, ult = 0, acum = 0, nCu = 0, calor = 0; const m = {x: 0, y: 0, tx: 0, ty: 0, f: 0, tf: 0}, luz = {x: .3, y: .3};
   function talla(){
     const r = hero.getBoundingClientRect(); W = Math.round(r.width); H = Math.round(r.height); asp = W / H;
@@ -645,13 +648,15 @@ void main(){
   }
   function cuadro(ahora){
     raf = 0; if (!vis || parada) return; const t = ahora / 1000;
-    /* equipos lentos: si pasa de ~40 ms por cuadro, baja la resolución; si sigue lento, deja la seda quieta */
+    // en pantallas táctiles los pliegues son lentos y no hay cursor: 30 cuadros por segundo se ven igual y gastan la mitad
+    if (tactil && ahora - ult < 30) { raf = requestAnimationFrame(cuadro); return; }
+    /* equipos lentos: si pasa de ~40 ms por cuadro (~60 ms a 30 cps), baja la resolución; si sigue lento, deja la seda quieta */
     if (calor < 6) calor++;                                            // los primeros cuadros compilan el shader: no cuentan
     else { const dt = ahora - ult; if (ult && dt < 2000) { acum += dt; nCu++; } }   // huecos largos = pestaña oculta, no cuentan
     ult = ahora;
     if (nCu >= 40 || (nCu >= 4 && acum > 1800)) {
       const media = acum / nCu; acum = nCu = 0;
-      if (media > 40) { if (factor > .4) { factor *= .65; talla(); raiz.dataset.seda = 'baja'; } else parada = true; }
+      if (media > (tactil ? 60 : 40)) { if (factor > .4) { factor *= .65; talla(); raiz.dataset.seda = 'baja'; } else parada = true; }
     }
     m.x += (m.tx - m.x) * .09; m.y += (m.ty - m.y) * .09; m.f += (m.tf - m.f) * .06;
     const ax = m.tf ? m.tx - .12 : Math.sin(t * .35) * asp * .36, ay = m.tf ? m.ty + .16 : .14 + Math.cos(t * .27) * .12;
