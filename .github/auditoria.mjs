@@ -2,7 +2,7 @@ import { chromium, devices } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import fs from 'node:fs';
 
-const URL = 'https://frank-abanto.pages.dev/';
+const URL = process.env.URL || 'https://frank-abanto.pages.dev/';
 const rep = [];
 const log = (s) => { rep.push(s); console.log(s); };
 
@@ -21,6 +21,26 @@ for (const f of ['mobile', 'desktop']) {
 }
 
 const browser = await chromium.launch({ args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader'] });
+
+// De dónde sale el bloqueo: CPU x4 (como Lighthouse móvil), 10 s, tareas largas por variante
+log(`== bloqueo por variante (movil, CPU x4, 10 s) == ${URL}`);
+for (const [nombre, sufijo, extra] of [['completo', '', {}], ['sin seda', '?sinseda', {}], ['sin animacion', '', { reducedMotion: 'reduce' }]]) {
+  const ctx = await browser.newContext({ ...devices['iPhone 13'], ...extra });
+  const page = await ctx.newPage();
+  const cdp = await ctx.newCDPSession(page);
+  await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+  await page.addInitScript(() => {
+    window.__lt = [];
+    new PerformanceObserver((l) => l.getEntries().forEach((e) => window.__lt.push([e.startTime, e.duration]))).observe({ type: 'longtask', buffered: true });
+  });
+  await page.goto(URL + sufijo, { waitUntil: 'load', timeout: 60000 });
+  await page.waitForTimeout(10000);
+  const lt = await page.evaluate(() => window.__lt);
+  const tbt = lt.reduce((s, [, d]) => s + Math.max(0, d - 50), 0);
+  const fcp = await page.evaluate(() => performance.getEntriesByName('first-contentful-paint')[0]?.startTime | 0);
+  log(`  ${nombre}: bloqueo ${Math.round(tbt)} ms en ${lt.length} tareas largas, FCP ${fcp} ms`);
+  await ctx.close();
+}
 const casos = [
   ['escritorio', { viewport: { width: 1440, height: 900 } }],
   ['movil', { ...devices['iPhone 13'] }],

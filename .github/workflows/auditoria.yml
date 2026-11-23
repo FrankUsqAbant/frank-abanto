@@ -2,13 +2,22 @@ name: auditoria
 on:
   push:
     branches: [auditoria]
-  workflow_dispatch:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+      - name: Rama a medir (.github/rama.txt; vacio = sitio publicado)
+        run: |
+          R=$(cat .github/rama.txt 2>/dev/null | tr -d '[:space:]')
+          if [ -n "$R" ]; then
+            git fetch -q origin "$R" && git worktree add -q sitio FETCH_HEAD
+            (cd sitio && python3 -m http.server 8080 >/dev/null 2>&1 &) ; sleep 2
+            echo "URL=http://localhost:8080/" >> $GITHUB_ENV
+          else
+            echo "URL=https://frank-abanto.pages.dev/" >> $GITHUB_ENV
+          fi
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -16,9 +25,9 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: mkdir -p out
       - name: Lighthouse movil
-        run: npx lighthouse https://frank-abanto.pages.dev/ --quiet --chrome-flags="--headless=new --no-sandbox" --output=json --output-path=out/lh-mobile.json || true
+        run: npx lighthouse "$URL" --quiet --chrome-flags="--headless=new --no-sandbox" --output=json --output-path=out/lh-mobile.json || true
       - name: Lighthouse escritorio
-        run: npx lighthouse https://frank-abanto.pages.dev/ --preset=desktop --quiet --chrome-flags="--headless=new --no-sandbox" --output=json --output-path=out/lh-desktop.json || true
+        run: npx lighthouse "$URL" --preset=desktop --quiet --chrome-flags="--headless=new --no-sandbox" --output=json --output-path=out/lh-desktop.json || true
       - run: node .github/auditoria.mjs
       - uses: actions/upload-artifact@v4
         with:
