@@ -297,6 +297,133 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
   .visor,#telon{display:none}
   *{transition-duration:.01s!important}
 }
+/* ============ el probador + la recepcionista (aislado bajo .probador) ============ */
+.probador{position:relative}
+/* ---------- el probador ---------- */
+
+.probador .dentro{max-width:1320px;margin:0 auto;padding:clamp(48px,9vh,120px) var(--lado) clamp(72px,12vh,150px)}
+.probador .etq{display:flex;align-items:center;gap:12px;color:var(--gris);margin-bottom:clamp(24px,4vh,44px)}
+.probador .etq::before{content:"";width:34px;border-top:1px dashed currentColor}
+.probador .rejilla{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(36px,6vw,96px);align-items:start}
+.probador .titular{font-family:var(--serif);font-weight:400;font-size:clamp(46px,6.4vw,104px);line-height:.94;letter-spacing:-.025em}
+.probador .titular em{color:var(--hilo)}
+.probador .bajada{font-size:17px;line-height:1.55;color:#bdb7ab;max-width:38ch;margin-top:22px}
+.probador form{margin-top:clamp(30px,5vh,52px);display:grid;gap:28px}
+.probador .campo label,.probador .campo legend{display:block;color:var(--gris);margin-bottom:10px;padding:0}
+.probador .campo input{width:100%;background:transparent;border:0;border-bottom:1.5px dashed rgba(244,242,238,.55);color:var(--papel);
+  font:italic 400 clamp(30px,3.4vw,46px)/1.15 var(--serif);padding:6px 2px 10px}
+.probador .campo input::placeholder{color:#5b574f}
+.probador .campo input:focus{outline:0;border-bottom-style:solid;border-bottom-color:var(--hilo)}
+.probador fieldset{border:0;padding:0;min-width:0}
+.probador .opciones{display:flex;flex-wrap:wrap;gap:10px}
+.probador .opciones label{position:relative;display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 20px;border-radius:999px;
+  border:1.5px solid rgba(244,242,238,.3);cursor:pointer;font-weight:500;font-size:15px;transition:border-color .2s,background .2s,color .2s}
+.probador .opciones input{position:absolute;opacity:0;pointer-events:none}
+.probador .opciones label:hover{border-color:var(--papel)}
+.probador .opciones label:has(input:checked){background:var(--papel);color:var(--tinta);border-color:var(--papel)}
+.probador .opciones label:has(input:focus-visible){outline:2px solid var(--hilo);outline-offset:3px}
+.probador .opciones i{width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor}
+.probador .opciones label:has(input:checked) i{background:var(--hilo);border-color:var(--hilo)}
+.probador .btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:var(--hilo);color:var(--tinta);font:600 16px var(--sans);
+  border:0;border-radius:999px;padding:18px 30px;cursor:pointer;width:max-content;transition:transform .25s,background .25s}
+.probador .btn:hover{transform:translateY(-2px);background:#ff7252}
+.probador .btn:disabled{opacity:.6;cursor:progress;transform:none}
+
+/* la tela donde se cose la muestra */
+.probador .maniqui{position:relative}
+.probador .pb-tela{position:relative;background:var(--papel);color:var(--tinta);border-radius:8px;padding:22px 22px 26px;transform:rotate(.8deg);
+  box-shadow:0 50px 90px -40px rgba(0,0,0,.85)}
+.probador .pb-tela::before{content:"";position:absolute;inset:10px;border:1.5px dashed rgba(14,13,11,.28);border-radius:4px;pointer-events:none}
+.probador .alfiler{position:absolute;left:50%;top:-7px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--hilo);box-shadow:inset 0 1px 2px rgba(14,13,11,.45);z-index:3}
+.probador .cab-tela{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--gris-claro);padding:6px 6px 0}
+.probador .nombre{position:relative;height:110px;display:grid;place-items:center;margin:2px 0 6px}
+.probador .nombre canvas{position:absolute;inset:0;width:100%;height:100%}
+.probador .nombre span{font-family:var(--serif);font-style:italic;font-size:64px;line-height:1;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.probador .bordando .nombre span{color:transparent}
+.probador .vacio{display:grid;place-items:center;text-align:center;min-height:330px;color:var(--gris-claro);gap:10px;padding:0 20px}
+.probador .vacio b{font-family:var(--serif);font-weight:400;font-style:italic;font-size:30px;color:var(--tinta)}
+.probador .puntadas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2}
+.probador .puntadas .p{fill:none;stroke:var(--hilo);stroke-width:1.6;stroke-dasharray:7 5;stroke-linecap:round}
+.probador .puntadas .aguja{fill:var(--tinta)}
+.probador .muestra{position:relative;margin:4px 6px 0}
+.probador .muestra .ap{opacity:0;transform:translateY(10px);transition:opacity .45s ease-out,transform .45s cubic-bezier(.2,.7,.2,1)}
+.probador .muestra .ap.ver{opacity:1;transform:none}
+
+/* muestra: web */
+.probador .web{border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 1px 0 rgba(14,13,11,.08),0 18px 40px -26px rgba(14,13,11,.5)}
+.probador .web .chrome{display:flex;align-items:center;gap:6px;padding:9px 12px;background:#ece9e3}
+.probador .web .chrome b{width:8px;height:8px;border-radius:50%;background:#cfcac1}
+.probador .web .chrome span{margin-left:10px;font:500 11px var(--mono);color:var(--gris-claro);background:#f7f5f1;border-radius:6px;padding:4px 10px;flex:1;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.probador .web .pag{padding:18px 20px 20px}
+.probador .web nav{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--gris-claro)}
+.probador .web nav strong{font:italic 400 18px var(--serif);color:var(--tinta)}
+.probador .web h4{font:400 clamp(26px,2.6vw,36px)/1 var(--serif);margin:22px 0 10px;max-width:14ch}
+.probador .web h4 em{color:var(--hilo)}
+.probador .web p{font-size:12.5px;line-height:1.5;color:var(--gris-claro);max-width:34ch}
+.probador .web .cta{display:inline-block;margin-top:14px;background:var(--tinta);color:var(--papel);font:600 12px var(--sans);padding:9px 14px;border-radius:999px}
+.probador .web .prods{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.probador .web .prods div{border-radius:8px;background:#f3f0ea;padding:30px 10px 10px;font-size:11.5px;font-weight:600;position:relative}
+.probador .web .prods div::before{content:"";position:absolute;left:10px;top:10px;width:16px;height:16px;border-radius:50%;background:var(--hilo);opacity:.85}
+.probador .web .prods div:nth-child(2)::before{background:var(--tinta)}.probador .web .prods div:nth-child(3)::before{background:#d9a441}
+
+/* muestra: asistente */
+.probador .chat{border-radius:16px;background:#fff;max-width:360px;margin:0 auto;box-shadow:0 18px 40px -26px rgba(14,13,11,.5);overflow:hidden}
+.probador .chat .top{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--tinta);color:var(--papel)}
+.probador .chat .top i{width:30px;height:30px;border-radius:50%;background:var(--hilo);color:var(--tinta);display:grid;place-items:center;font:italic 400 17px var(--serif)}
+.probador .chat .top b{display:block;font-size:13px}.probador .chat .top small{font-size:11px;color:#bdb7ab}
+.probador .chat .top small::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#45d483;margin-right:6px}
+.probador .chat .hilo-msj{padding:14px;display:flex;flex-direction:column;gap:9px;min-height:230px;background:#f6f4f0}
+.probador .burbuja{max-width:82%;font-size:13px;line-height:1.45;padding:9px 12px;border-radius:14px;background:#fff;box-shadow:0 1px 0 rgba(14,13,11,.06)}
+.probador .burbuja.mio{align-self:flex-end;background:var(--tinta);color:var(--papel);border-bottom-right-radius:4px}
+.probador .burbuja.el{border-bottom-left-radius:4px}
+.probador .escribe{display:inline-flex;gap:4px}.probador .escribe b{width:6px;height:6px;border-radius:50%;background:#a19b90;animation:salto 1s infinite}
+.probador .escribe b:nth-child(2){animation-delay:.15s}.probador .escribe b:nth-child(3){animation-delay:.3s}
+@keyframes salto{50%{transform:translateY(-4px);opacity:.5}}
+
+/* muestra: automatización */
+.probador .flujo{position:relative;padding:20px 4px 10px}
+.probador .flujo .nodos{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;z-index:1}
+.probador .flujo .nodo{background:#fff;border-radius:12px;padding:14px 12px;box-shadow:0 18px 40px -28px rgba(14,13,11,.55);font-size:12.5px;line-height:1.35;font-weight:600}
+.probador .flujo .nodo small{display:block;font:500 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gris-claro);margin-bottom:8px}
+.probador .flujo svg{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}
+.probador .flujo .ruta{fill:none;stroke:var(--tinta);stroke-width:1.4;stroke-dasharray:3 6;opacity:.5}
+.probador .flujo .bola{fill:var(--hilo)}
+.probador .aviso{margin-top:26px;display:flex;align-items:center;gap:12px;background:var(--tinta);color:var(--papel);border-radius:12px;padding:12px 14px;font-size:12.5px;max-width:360px}
+.probador .aviso i{width:10px;height:10px;border-radius:50%;background:#45d483;flex:none}
+.probador .aviso b{font-weight:600}
+.probador .hora{margin-top:14px;font:500 11px var(--mono);color:var(--gris-claro);letter-spacing:.08em}
+
+/* la recepcionista */
+.probador .recep{margin-top:34px;background:#1a1815;border:1px solid #2c2925;border-radius:14px;padding:18px;max-width:640px;margin-left:auto;margin-right:auto}
+.probador .recep[hidden]{display:none}
+.probador .recep .quien{display:flex;align-items:center;gap:10px;color:#bdb7ab;margin-bottom:12px}
+.probador .recep .quien i{width:28px;height:28px;border-radius:50%;background:var(--papel);color:var(--tinta);display:grid;place-items:center;font:italic 400 15px var(--serif)}
+.probador .recep .msjs{display:flex;flex-direction:column;gap:9px}
+.probador .recep .burbuja{background:#2a2722;color:var(--papel);box-shadow:none}
+.probador .recep .burbuja.mio{background:var(--hilo);color:var(--tinta)}
+.probador .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.probador .chips button,.probador .chips a{min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid #4a463e;background:transparent;color:var(--papel);font:500 14px var(--sans);cursor:pointer;display:inline-flex;align-items:center;text-decoration:none}
+.probador .chips button:hover,.probador .chips a:hover{border-color:var(--papel)}
+.probador .chips a.cita{background:var(--papel);color:var(--tinta);border-color:var(--papel);font-weight:600}
+.probador .nota{margin-top:14px;color:#6f6a61;line-height:1.6}
+.probador .recep .msjs{max-height:340px;overflow-y:auto;padding-right:4px}
+.probador .charla{display:flex;gap:8px;margin-top:14px;position:relative}
+.probador .charla input{flex:1;min-width:0;min-height:48px;background:#0e0d0b;border:1.5px solid #3a362f;border-radius:999px;color:var(--papel);font:400 15px var(--sans);padding:0 18px}
+.probador .charla input:focus{outline:0;border-color:var(--hilo)}
+.probador .charla .btn{padding:0 22px;min-height:48px;width:auto;font-size:15px}
+
+@media (max-width:860px){
+  .probador .rejilla{grid-template-columns:1fr}
+  .probador .pb-tela{transform:none;min-height:0;padding:18px 14px 20px}
+  .probador .nombre{height:84px}.probador .nombre span{font-size:46px}
+  .probador .web .prods{grid-template-columns:1fr 1fr}.probador .web .prods div:nth-child(3){display:none}
+  .probador .flujo .nodos{grid-template-columns:1fr;gap:18px}
+  .probador .btn{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .probador *{transition-duration:.01s!important;animation:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -306,7 +433,7 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
 <header class="nav">
   <a class="marca-nav" href="#inicio" aria-label="Frank Abanto - Inicio"><img src="logo.svg" alt="" width="32" height="32" class="logo-nav"><span class="firma">Frank Abanto</span></a>
   <nav aria-label="Principal"><a href="#servicios">Servicios</a><a href="#proceso">Proceso</a><a href="#proyectos">Proyectos</a></nav>
-  <a class="pill" href="https://cal.com/franquer-abanto-i45gjj/frank.pages.dev" target="_blank" rel="noopener noreferrer">Agendar llamada ↗</a>
+  <a class="pill" href="#probador" data-recep>Escríbeme ↗</a>
 </header>
 <div class="visor" id="visor" aria-hidden="true">
   <div class="v"><i class="b t"></i><i class="b l1"></i><i class="b l2"></i><i class="b bt"></i></div>
@@ -318,7 +445,7 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
 </div>
 
 <main>
-<a class="flota" id="flota" href="https://cal.com/franquer-abanto-i45gjj/frank.pages.dev" target="_blank" rel="noopener noreferrer">Agendar llamada ↗</a>
+<a class="flota" id="flota" href="#probador" data-recep>Escríbeme ↗</a>
 <!-- 1 · HERO -->
 <section class="hero" id="inicio">
   <canvas id="seda" aria-hidden="true"></canvas>
@@ -329,7 +456,7 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
     <p>Conecto tus herramientas, automatizo tus procesos y pongo la inteligencia artificial a trabajar para ti. Tú te enfocas en crecer.</p>
     <div class="acciones">
       <div class="yo"><img src="frank-avatar.webp" alt="Frank Abanto" width="46" height="46" decoding="async"><span><b>Frank Abanto</b>te respondo yo</span></div>
-      <a class="btn" href="#hablemos">Hablemos de tu negocio <span aria-hidden="true">↗</span></a>
+      <a class="btn" href="#probador">Pruébate tu proyecto <span aria-hidden="true">↗</span></a>
     </div>
   </div>
 </section>
@@ -365,8 +492,60 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
   </div>
 </section>
 
+<!-- 3b · EL PROBADOR -->
+<section class="probador oscuro corte" id="probador" style="--prev:var(--papel)">
+  <div class="dentro">
+    <p class="etq mono">El probador</p>
+    <div class="rejilla">
+      <div>
+        <h2 class="titular sube">Pruébate tu <em>proyecto</em> antes de encargarlo.</h2>
+        <p class="bajada">Escribe el nombre de tu negocio, elige qué te quieres probar y lo coso para ti, aquí mismo.</p>
+        <form id="pbForm" novalidate>
+          <div class="campo">
+            <label class="mono" for="neg">Tu negocio</label>
+            <input id="neg" name="neg" type="text" maxlength="22" placeholder="ej. Panadería Luna" autocomplete="organization">
+          </div>
+          <fieldset class="campo">
+            <legend class="mono">¿Qué te quieres probar?</legend>
+            <div class="opciones">
+              <label><input type="radio" name="tipo" value="web" checked><i></i>Una página web</label>
+              <label><input type="radio" name="tipo" value="asistente"><i></i>Un asistente con IA</label>
+              <label><input type="radio" name="tipo" value="auto"><i></i>Una automatización</label>
+            </div>
+          </fieldset>
+          <button class="btn" id="coser" type="submit">Coser mi muestra <span aria-hidden="true">↗</span></button>
+        </form>
+      </div>
+
+      <div class="maniqui">
+        <div class="pb-tela" id="pbTela">
+          <span class="alfiler" aria-hidden="true"></span>
+          <svg class="puntadas" id="puntadas" aria-hidden="true"></svg>
+          <div class="cab-tela"><span class="mono" id="cabIzq">Hecho a medida para</span><span class="mono" id="cabDer">muestra 00</span></div>
+          <div class="nombre" id="zonaNombre"><canvas id="lienzoN" aria-hidden="true"></canvas><span id="nombreTxt">tu negocio</span></div>
+          <div class="muestra" id="muestra" aria-live="polite">
+            <div class="vacio"><b>Aquí se cose tu muestra.</b><span>Escribe tu negocio y pulsa «Coser mi muestra».</span></div>
+          </div>
+        </div>
+
+        <div class="recep" id="recep" hidden aria-live="polite">
+          <div class="quien"><i aria-hidden="true">F</i><span class="mono">Recepcionista del taller</span></div>
+          <div class="msjs" id="msjs"></div>
+          <div class="chips" id="chips"></div>
+          <form class="charla" id="charla" autocomplete="off">
+            <label class="mono" for="txt" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Escribe tu mensaje</label>
+            <input id="txt" type="text" maxlength="600" placeholder="Escribe aquí…">
+            <button class="btn" id="enviar" type="submit">Enviar</button>
+          </form>
+          <p class="nota mono">Asistente con IA · Frank revisa cada caso · Lo que escribas se guarda solo para responderte (Ley 29733)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- 4 · PROCESO -->
-<section class="proc" id="proceso">
+<section class="proc corte" id="proceso" style="--prev:var(--tinta)">
   <div class="pista" id="pista">
       <div class="paso intro"><span class="mono">Cómo trabajo</span><h3>Cuatro pasos, sin sorpresas.</h3><p>Igual que un sastre: primero mido, después corto.</p></div>
       <div class="paso"><span class="mono">01 · 30 minutos</span><h3>Medir</h3><p>Una llamada para entender cómo trabajas hoy y dónde se te va el tiempo.</p></div>
@@ -426,7 +605,7 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
       </div>
     </div>
     <div class="fila">
-      <a class="btn" href="https://cal.com/franquer-abanto-i45gjj/frank.pages.dev" target="_blank" rel="noopener noreferrer">Agendar llamada <span aria-hidden="true">↗</span></a>
+      <a class="btn" href="#probador" data-recep>Habla con la recepcionista <span aria-hidden="true">↗</span></a>
       <span>Te tomo las medidas de <b id="medidasDe">tu negocio</b> y lo vemos juntos. Sin compromiso.</span>
     </div>
   </div>
@@ -854,6 +1033,188 @@ coser(); alDesplazar();
 /* aparición suave de titulares */
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .2});
 document.querySelectorAll('.sube').forEach(el => io.observe(el));
+
+(function probador(){
+const $ = id => document.getElementById(id);
+/* ============ el probador ============ */
+const CAL = 'https://cal.com/franquer-abanto-i45gjj/frank.pages.dev';
+const RUBROS = [
+  {re: /pan|pastel|torta|dulce|reposter|cake|bizcoch/i, frase: ['Tortas que se vuelven', 'recuerdo'], texto: 'Pide tu torta por WhatsApp y recógela lista.', prods: ['Torta de chocolate', 'Pie de manzana', 'Bocaditos'],
+    q: '¿Tienen torta de chocolate para hoy?', r: n => `¡Hola! Sí, en ${n} tenemos torta de chocolate lista para hoy. ¿Para cuántas personas la necesitas?`,
+    flujo: [['Llega', 'Pedido por WhatsApp'], ['Se anota', 'En tu hoja de pedidos'], ['Avisa', 'A cocina, con la hora']], aviso: 'Nuevo pedido: torta de chocolate para 12'},
+  {re: /hostal|hotel|hosped|alojam|posada|lodge|inn/i, frase: ['Llega a la hora', 'que llegues'], texto: 'Reserva tu habitación en un minuto, sin llamadas.', prods: ['Simple', 'Matrimonial', 'Familiar'],
+    q: '¿Tienen habitación para esta noche?', r: n => `¡Hola! Sí, en ${n} nos queda una matrimonial para esta noche. ¿A qué hora piensas llegar?`,
+    flujo: [['Llega', 'Reserva desde la web'], ['Se bloquea', 'La habitación en tu calendario'], ['Avisa', 'A recepción y al huésped']], aviso: 'Nueva reserva: matrimonial, llega 23:40'},
+  {re: /rest|poll|cevich|chifa|caf|menu|men[uú]|comida|parrill|pizz|burger|sangu|juguer/i, frase: ['Tu mesa favorita,', 'a un mensaje'], texto: 'La carta del día y el delivery, en tu celular.', prods: ['Menú del día', 'A la carta', 'Delivery'],
+    q: '¿Hacen delivery a mi zona?', r: n => `¡Hola! Sí, ${n} hace delivery en tu zona. ¿Te paso la carta de hoy?`,
+    flujo: [['Llega', 'Pedido desde la carta'], ['Se anota', 'En la comanda de cocina'], ['Avisa', 'Al repartidor con la dirección']], aviso: 'Nuevo delivery: 2 menús, Jr. Lima 210'},
+  {re: /tienda|zapat|calzad|boutique|moda|ropa|bazar|ferret|market|store|shop|óptica|optica|librer/i, frase: ['Lo que buscas,', 'con stock real'], texto: 'Tu catálogo siempre al día y los pedidos por WhatsApp.', prods: ['Nuevo ingreso', 'Más vendido', 'Oferta'],
+    q: '¿Tienen la talla 41?', r: n => `¡Hola! Sí, en ${n} nos quedan 2 pares en talla 41. ¿Te separo uno?`,
+    flujo: [['Llega', 'Pedido del catálogo'], ['Se descuenta', 'Del stock al instante'], ['Avisa', 'Para preparar el envío']], aviso: 'Venta nueva: talla 41, quedan 1'}
+];
+const GENERICO = {frase: ['Tu negocio, abierto', 'las 24 horas'], texto: 'Que te encuentren, te escriban y te reserven sin esperar.', prods: ['Consulta', 'Reserva', 'Cotización'],
+  q: '¿Atienden los sábados?', r: n => `¡Hola! Sí, ${n} atiende los sábados de 9 a 1. ¿Te reservo un espacio?`,
+  flujo: [['Llega', 'Consulta desde la web'], ['Se anota', 'En tu agenda y tu hoja'], ['Avisa', 'A ti, con el resumen']], aviso: 'Nueva consulta: sábado 10:00'};
+
+const esc = t => String(t).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+const espera = ms => new Promise(r => setTimeout(r, quieto ? 0 : ms));
+const slug = t => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '') || 'tunegocio';
+let nombre = 'tu negocio', bordado = null, corrida = 0, cuenta = 0;
+
+function bordadoNombre(){
+  if (quieto || !window.crearBordado) return null;
+  return crearBordado({
+    zona: $('zonaNombre'), cv: $('lienzoN'), tope: innerWidth < 700 ? 2200 : 3600, paso: 2, radio: 80,
+    dura: 1100, aguja: true, color: '14,13,11', sombra: 'rgba(14,13,11,.16)', grosor: 1, metal: '#8d887e',
+    pintar(a, W, H){
+      let fs = H * .8; do { a.font = `italic 400 ${fs}px "Instrument Serif"`; fs -= 2; } while (a.measureText(nombre).width > W * .94 && fs > 14);
+      a.textAlign = 'center'; a.textBaseline = 'middle'; a.fillText(nombre, W / 2, H * .52);
+    }
+  });
+}
+
+function htmlMuestra(tipo, R){
+  if (tipo === 'web') return `<div class="web ap" data-marco>
+      <div class="chrome"><b></b><b></b><b></b><span>${esc(slug(nombre))}.pe</span></div>
+      <div class="pag">
+        <nav class="ap"><strong>${esc(nombre)}</strong><span>Inicio · Catálogo · Contacto</span></nav>
+        <h4 class="ap">${esc(R.frase[0])} <em>${esc(R.frase[1])}.</em></h4>
+        <p class="ap">${esc(R.texto)}</p>
+        <span class="cta ap">Pedir por WhatsApp ↗</span>
+        <div class="prods">${R.prods.map(p => `<div class="ap">${esc(p)}</div>`).join('')}</div>
+      </div></div>`;
+  if (tipo === 'asistente') return `<div class="chat ap" data-marco>
+      <div class="top"><i>${esc(nombre.charAt(0).toUpperCase())}</i><div><b>${esc(nombre)}</b><small>responde al instante</small></div></div>
+      <div class="hilo-msj" id="hiloMsj"></div></div>`;
+  return `<div class="flujo" data-marco>
+      <svg aria-hidden="true"><path class="ruta" id="ruta"/><circle class="bola" id="bola" r="5" cx="-20" cy="-20"/></svg>
+      <div class="nodos">${R.flujo.map((f, i) => `<div class="nodo ap"><small>0${i + 1} · ${esc(f[0])}</small>${esc(f[1])}</div>`).join('')}</div>
+      <div class="aviso ap" id="aviso"><i></i><span><b>${esc(nombre)}</b> · ${esc(R.aviso)}</span></div>
+      <p class="hora ap">Sin copiar ni pegar · funciona aunque estés durmiendo</p></div>`;
+}
+
+/* hilo que cose el borde de la muestra, con la aguja siguiendo la puntada */
+async function coserBorde(n){
+  const svg = $('puntadas'), tela = $('pbTela'), marco = $('muestra').querySelector('[data-marco]');
+  if (!marco) return;
+  const mu = $('muestra');                                     // la tela está girada: medimos con offsets, en su propio sistema
+  const x = mu.offsetLeft + marco.offsetLeft - 6, y = mu.offsetTop + marco.offsetTop - 6, w = marco.offsetWidth + 12, h = marco.offsetHeight + 12, r = 14;
+  svg.setAttribute('viewBox', `0 0 ${tela.offsetWidth} ${tela.offsetHeight}`);
+  const d = `M ${x + r} ${y} H ${x + w - r} Q ${x + w} ${y} ${x + w} ${y + r} V ${y + h - r} Q ${x + w} ${y + h} ${x + w - r} ${y + h} H ${x + r} Q ${x} ${y + h} ${x} ${y + h - r} V ${y + r} Q ${x} ${y} ${x + r} ${y}`;
+  svg.innerHTML = `<defs><mask id="mk"><path d="${d}" fill="none" stroke="#fff" stroke-width="6" id="mkP"/></mask></defs>
+    <path class="p" d="${d}" mask="url(#mk)"/><circle class="aguja" id="agujaP" r="3.5" cx="-20" cy="-20"/>`;
+  const mk = $('mkP'), L = mk.getTotalLength(), ag = $('agujaP');
+  mk.style.strokeDasharray = L; mk.style.strokeDashoffset = L;
+  if (quieto) { mk.style.strokeDashoffset = 0; return; }
+  const dur = 1300, t0 = performance.now();
+  await new Promise(fin => { (function paso(a){ if (n !== corrida) return fin();
+    const q = Math.min(1, (a - t0) / dur), e = 1 - Math.pow(1 - q, 3), p = mk.getPointAtLength(L * e);
+    mk.style.strokeDashoffset = L * (1 - e); ag.setAttribute('cx', p.x); ag.setAttribute('cy', p.y);
+    q < 1 ? requestAnimationFrame(paso) : (ag.setAttribute('cx', -20), fin()); })(t0); });
+}
+
+async function cascada(n){
+  for (const el of $('muestra').querySelectorAll('.ap')) { if (n !== corrida) return; el.classList.add('ver'); await espera(90); }
+}
+
+async function vida(tipo, R, n){
+  if (tipo === 'asistente') {
+    const h = $('hiloMsj'), poner = (cls, html) => { const b = document.createElement('div'); b.className = 'burbuja ' + cls; b.innerHTML = html; h.append(b); return b; };
+    await espera(250); poner('mio', esc(R.q));
+    await espera(500); const e = poner('el', '<span class="escribe" aria-label="escribiendo"><b></b><b></b><b></b></span>');
+    await espera(1300); if (n !== corrida) return; e.textContent = R.r(nombre);
+    await espera(700); poner('mio', '¡Perfecto, gracias!');
+  }
+  if (tipo === 'auto') {
+    const nodos = [...$('muestra').querySelectorAll('.nodo')], caja = $('muestra').querySelector('.nodos');
+    const c = nodos.map(nd => [caja.offsetLeft + nd.offsetLeft + nd.offsetWidth / 2, caja.offsetTop + nd.offsetTop + nd.offsetHeight / 2]);
+    const ruta = $('ruta'), bola = $('bola');
+    ruta.setAttribute('d', 'M ' + c.map(p => p.join(' ')).join(' L ')); const L = ruta.getTotalLength();
+    $('aviso').classList.remove('ver');
+    for (let v = 0; v < (quieto ? 0 : 2); v++) {
+      const t0 = performance.now(), dur = 1600;
+      await new Promise(fin => { (function paso(a){ if (n !== corrida) return fin(); const q = Math.min(1, (a - t0) / dur), e = q < .5 ? 4 * q * q * q : 1 - Math.pow(-2 * q + 2, 3) / 2, p = ruta.getPointAtLength(L * e);
+        bola.setAttribute('cx', p.x); bola.setAttribute('cy', p.y); q < 1 ? requestAnimationFrame(paso) : fin(); })(t0); });
+      $('aviso').classList.add('ver'); await espera(500);
+    }
+    $('aviso').classList.add('ver');
+  }
+}
+
+/* la recepcionista: IA real en Cloudflare (recepcionista-frank). Responde, averigua lo que necesitas y avisa a Frank. */
+const RECEP = 'https://recepcionista-frank.usquizafranquer.workers.dev/chat';
+let charla = [], ficha = {}, ultimoTipo = 'web', ocupada = false;
+const TIPOS = {web: 'una página web', asistente: 'un asistente con IA', auto: 'una automatización'};
+function di(txt, yo){ const b = document.createElement('div'); b.className = 'burbuja ' + (yo ? 'mio' : 'el'); b.textContent = txt; $('msjs').append(b); b.scrollIntoView({block: 'nearest'}); return b; }
+function sugerencias(lista){
+  const chips = $('chips'); chips.innerHTML = '';
+  for (const t of lista) { const el = document.createElement('button'); el.type = 'button'; el.textContent = t; el.onclick = () => enviar(t); chips.append(el); }
+  if (ficha.estado === 'listo') { const a = document.createElement('a'); a.className = 'cita'; a.href = CAL; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = 'Separar llamada con Frank ↗'; chips.prepend(a); }
+}
+async function enviar(texto){
+  texto = String(texto || '').trim().slice(0, 600); if (!texto || ocupada) return;
+  ocupada = true; $('txt').value = ''; $('enviar').disabled = true;
+  di(texto, true); charla.push({rol: 'cliente', texto}); sugerencias([]);
+  const esc = di('', false); esc.innerHTML = '<span class="escribe" aria-label="escribiendo"><b></b><b></b><b></b></span>';
+  try {
+    const r = await fetch(RECEP, {method: 'POST', headers: {'content-type': 'application/json'},
+      body: JSON.stringify({mensajes: charla.slice(-14), ficha, contexto: {negocio: nombre, tipo: TIPOS[ultimoTipo]}})});
+    const j = await r.json();
+    esc.textContent = j.respuesta || 'Se me enredó el hilo. ¿Me lo repites?';
+    if (j.ficha) ficha = j.ficha;
+    charla.push({rol: 'recep', texto: esc.textContent});
+  } catch (e) {
+    esc.textContent = 'No pude conectarme ahora. Inténtalo en un momento.';
+  }
+  ocupada = false; $('enviar').disabled = false;
+  sugerencias(ficha.estado === 'listo' ? [] : charla.length < 3 ? ['¿Cómo trabaja Frank?', '¿Cuánto demora?'] : []);
+}
+function recepcionista(){
+  $('msjs').innerHTML = ''; $('recep').hidden = false; charla = []; ficha = {};
+  const saludo = `¿Te lo hago de verdad? Cuéntame un poco de ${nombre}: ¿qué te gustaría resolver con ${TIPOS[ultimoTipo]}?`;
+  di(saludo, false); charla.push({rol: 'recep', texto: saludo});
+  sugerencias(['Sí, quiero cotizar', '¿Cómo trabaja Frank?', 'Solo estoy mirando']);
+}
+$('charla').addEventListener('submit', e => { e.preventDefault(); enviar($('txt').value); });
+
+$('pbForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const n = ++corrida, btn = $('coser');
+  nombre = $('neg').value.trim() || 'Panadería Luna';
+  const tipo = new FormData($('pbForm')).get('tipo'), R = RUBROS.find(x => x.re.test(nombre)) || GENERICO;
+  ultimoTipo = tipo; btn.disabled = true; $('recep').hidden = true; $('puntadas').innerHTML = '';
+  $('nombreTxt').textContent = nombre; $('cabDer').textContent = 'muestra ' + String(++cuenta).padStart(2, '0');
+  $('muestra').innerHTML = htmlMuestra(tipo, R);
+  if (innerWidth < 861) $('pbTela').scrollIntoView({behavior: quieto ? 'auto' : 'smooth', block: 'start'});
+  if (!bordado) { bordado = bordadoNombre(); if (bordado) raiz.classList.add('bordando'); }
+  bordado && bordado.preparar();
+  await espera(350);
+  await coserBorde(n);
+  await cascada(n);
+  await vida(tipo, R, n);
+  if (n !== corrida) return;
+  btn.disabled = false; btn.firstChild.textContent = 'Coser otra muestra ';
+  recepcionista();
+});
+
+/* abrir la recepcionista desde cualquier botón "Escríbeme" (sin coser muestra) */
+function abrirSola(){
+  const neg = (document.getElementById('negocio') || {}).value;
+  if ($('recep').hidden) {
+    if (neg && neg.trim()) nombre = neg.trim();
+    $('msjs').innerHTML = ''; $('recep').hidden = false; charla = []; ficha = {};
+    const saludo = (neg && neg.trim())
+      ? `Hola, soy la recepcionista del taller de Frank, un asistente con IA. Cuéntame de ${nombre}: ¿qué te gustaría resolver?`
+      : 'Hola, soy la recepcionista del taller de Frank, un asistente con IA. ¿Qué negocio tienes y qué te gustaría resolver?';
+    di(saludo, false); charla.push({rol: 'recep', texto: saludo});
+    sugerencias(['Quiero una página web', 'Quiero un asistente con IA', 'Quiero automatizar algo']);
+  }
+  $('recep').scrollIntoView({behavior: quieto ? 'auto' : 'smooth', block: 'center'});
+  setTimeout(() => $('txt').focus({preventScroll: true}), quieto ? 0 : 600);
+}
+document.querySelectorAll('[data-recep]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); abrirSola(); }));
+
+})();
 </script>
 </body>
 </html>
