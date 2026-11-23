@@ -1,0 +1,26 @@
+name: auditoria
+on:
+  push:
+    branches: [auditoria]
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm i --no-save playwright@1.48.2 @axe-core/playwright@4.10.1 lighthouse@12.2.1
+      - run: npx playwright install --with-deps chromium
+      - run: mkdir -p out
+      - name: Lighthouse movil
+        run: npx lighthouse https://frank-abanto.pages.dev/ --quiet --chrome-flags="--headless=new --no-sandbox" --output=json --output-path=out/lh-mobile.json || true
+      - name: Lighthouse escritorio
+        run: npx lighthouse https://frank-abanto.pages.dev/ --preset=desktop --quiet --chrome-flags="--headless=new --no-sandbox" --output=json --output-path=out/lh-desktop.json || true
+      - run: node .github/auditoria.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: auditoria
+          path: out
