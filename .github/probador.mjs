@@ -39,8 +39,9 @@ for (const [nombre, opts] of casos) {
     await page.screenshot({ path: `out/p-${nombre}-${++k}-${tipo}.png` });
   }
   // recepcionista: recorrer el guion de cotizar
-  for (const t of ['Sí, quiero cotizar', 'Este mes']) { await page.getByRole('button', { name: t }).click(); await page.waitForTimeout(900); }
-  const fin = await page.evaluate(() => ({ msjs: document.querySelectorAll('#msjs .burbuja').length, cita: !!document.querySelector('#chips a.cita') }));
+  await page.getByRole('button', { name: 'Sí, quiero cotizar' }).click(); await page.waitForTimeout(7000);
+  await page.fill('#txt', 'Quiero que mis clientes pidan tortas por la web, para fin de mes'); await page.click('#enviar'); await page.waitForTimeout(7000);
+  const fin = await page.evaluate(() => ({ msjs: document.querySelectorAll('#msjs .burbuja').length, cita: !!document.querySelector('#chips a.cita'), ultima: [...document.querySelectorAll('#msjs .burbuja')].pop()?.textContent }));
   log(`${nombre} · recepcionista: ${JSON.stringify(fin)}`);
   await page.locator('#recep').scrollIntoViewIfNeeded();
   await page.screenshot({ path: `out/p-${nombre}-9-recep.png` });
