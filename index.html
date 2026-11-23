@@ -14,11 +14,15 @@
 <meta property="og:description" content="Conecto tus herramientas, automatizo tus procesos y pongo la inteligencia artificial a trabajar para ti.">
 <meta property="og:image" content="https://frank-abanto.pages.dev/frank-avatar.webp">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&text=Frank%20Abanto&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/instrument-serif-400-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+/* fuentes propias (antes Google Fonts: dos hojas externas que bloqueaban el primer pintado) */
+@font-face{font-family:"Instrument Serif";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/instrument-serif-400.woff2) format("woff2")}
+@font-face{font-family:"Instrument Serif";font-style:italic;font-weight:400;font-display:swap;src:url(fonts/instrument-serif-400-italic.woff2) format("woff2")}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url(fonts/inter-variable.woff2) format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:100 800;font-display:swap;src:url(fonts/jetbrains-mono-variable.woff2) format("woff2")}
+@font-face{font-family:"La Belle Aurore";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/la-belle-aurore-firma.ttf) format("truetype")}
 :root{
   --tinta:#0e0d0b; --papel:#f4f2ee; --hilo:#ff5a36; --gris:#8d887e; --gris-claro:#5f5b54;
   --serif:"Instrument Serif",Georgia,serif; --sans:Inter,system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
@@ -824,8 +828,11 @@ function alDesplazar(){
   const pt = trazo.getPointAtLength(largo * prog); aguja.setAttribute('cx', pt.x); aguja.setAttribute('cy', pt.y);
   const fin = document.getElementById('hablemos').getBoundingClientRect().top;
   const pr = document.getElementById('proyectos').getBoundingClientRect();     // el flotante no tapa los controles del carrusel
-  document.getElementById('flota').classList.toggle('ver', scrollY > vh * .9 && fin > vh * .7 && !(pr.top < vh && pr.bottom > 0));
+  // en móvil tapa el texto que se lee: aparece solo al subir (la persona busca algo) y se esconde al bajar (está leyendo)
+  const y = scrollY, baja = y > yPrevio + 4, sube = y < yPrevio - 4; if (baja || sube) { leyendo = baja; yPrevio = y; }
+  document.getElementById('flota').classList.toggle('ver', y > vh * .9 && fin > vh * .7 && !(pr.top < vh && pr.bottom > 0) && !(movil.matches && leyendo));
 }
+let yPrevio = scrollY, leyendo = true; const movil = matchMedia('(max-width:860px)');
 addEventListener('scroll', () => { if (!pend) { pend = true; requestAnimationFrame(alDesplazar); } }, {passive: true});
 addEventListener('resize', () => { coser(); alDesplazar(); });
 addEventListener('load', () => { coser(); alDesplazar(); });
