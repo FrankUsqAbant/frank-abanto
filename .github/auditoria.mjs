@@ -70,6 +70,11 @@ for (const [nombre, opts] of casos) {
   log(`== ${nombre} == alto ${h}px, desborde horizontal ${overflow}px, pantallas ${i}`);
   errores.forEach((e) => log(`  consola: ${e}`));
   fallidos.forEach((e) => log(`  recurso fallido: ${e}`));
+  // botón flotante: ¿aparece al subir y se esconde al bajar?
+  const flota = async (y) => { await page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' }), y); await page.waitForTimeout(500); return page.evaluate(() => document.getElementById('flota')?.classList.contains('ver')); };
+  const sube = await flota(vh * 1.5), baja = await flota(vh * 2.2);
+  await flota(vh * 1.6); await page.screenshot({ path: `out/${nombre}-flota-al-subir.png` });
+  log(`  flotante: al subir ${sube ? 'visible' : 'oculto'}, al bajar ${baja ? 'visible' : 'oculto'}`);
   if (nombre !== 'movil-reducido') {
     const axe = await new AxeBuilder({ page }).analyze();
     for (const v of axe.violations) log(`  axe [${v.impact}] ${v.id}: ${v.help} (${v.nodes.length})`);
