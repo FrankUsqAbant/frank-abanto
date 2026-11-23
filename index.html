@@ -173,6 +173,8 @@ section{position:relative}
 .tags span{border:1px solid #3a362f;border-radius:999px;padding:5px 11px;font:500 11px var(--mono);color:#bdb7ab}
 .enl{display:flex;gap:22px;font-size:14px;font-weight:600}
 .enl a{text-underline-offset:5px}
+/* dedos: objetivos táctiles de 44 px sin cambiar el aspecto */
+@media (pointer:coarse){.enl a,footer nav a,.cab-proy>a,.nota-serv a,.nav .pill{display:inline-flex;align-items:center;min-height:44px}}
 
 /* 6 · cierre */
 .cierre{background:var(--hilo);color:var(--tinta);overflow:hidden}
@@ -314,9 +316,9 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
   <div class="v"><div class="ba"><b style="--h:34%"></b><b style="--h:52%"></b><b style="--h:44%"></b><b style="--h:70%"></b><b style="--h:92%"></b></div></div>
   <div class="v"><div class="h24"><em>24/7</em><span>en línea · responde en segundos</span></div></div>
 </div>
-<a class="flota" id="flota" href="https://cal.com/franquer-abanto-i45gjj/frank.pages.dev" target="_blank" rel="noopener noreferrer">Agendar llamada ↗</a>
 
 <main>
+<a class="flota" id="flota" href="https://cal.com/franquer-abanto-i45gjj/frank.pages.dev" target="_blank" rel="noopener noreferrer">Agendar llamada ↗</a>
 <!-- 1 · HERO -->
 <section class="hero" id="inicio">
   <canvas id="seda" aria-hidden="true"></canvas>
@@ -385,19 +387,19 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
     <div class="carrusel" role="region" aria-roledescription="carrusel" aria-label="Proyectos">
     <div class="pistaP" id="lista-proy" tabindex="0" aria-live="polite">
     <article class="proy">
-      <a class="marco" href="https://chavez-originals.pages.dev" target="_blank" rel="noopener noreferrer" aria-label="Ver demo de Chavez Originals"><img loading="lazy" src="https://abanto.pages.dev/images/projects/chavez-originals.webp" alt="Captura de Chavez Originals"></a>
+      <a class="marco" href="https://chavez-originals.pages.dev" target="_blank" rel="noopener noreferrer" aria-label="Ver demo de Chavez Originals"><img loading="lazy" src="proyectos/chavez-originals.webp" alt="Captura de Chavez Originals"></a>
       <div><span class="n mono">01 · tienda</span><h3>Chavez Originals</h3><p>Tienda de calzado con vitrina interactiva, catálogo administrable y pedidos por WhatsApp.</p>
         <div class="tags"><span>React</span><span>Supabase</span><span>Tailwind CSS</span></div>
         <div class="enl"><a href="https://chavez-originals.pages.dev" target="_blank" rel="noopener noreferrer">Ver demo ↗</a></div></div>
     </article>
     <article class="proy">
-      <a class="marco" href="https://hostal-aguilar.pages.dev" target="_blank" rel="noopener noreferrer" aria-label="Ver demo de Hostal Aguilar"><img loading="lazy" src="https://abanto.pages.dev/images/projects/hostal-aguilar.webp" alt="Captura de Hostal Aguilar"></a>
+      <a class="marco" href="https://hostal-aguilar.pages.dev" target="_blank" rel="noopener noreferrer" aria-label="Ver demo de Hostal Aguilar"><img loading="lazy" src="proyectos/hostal-aguilar.webp" alt="Captura de Hostal Aguilar"></a>
       <div><span class="n mono">02 · hospedaje</span><h3>Hostal Aguilar</h3><p>Hospedaje con reservas por WhatsApp y panel de administración.</p>
         <div class="tags"><span>React</span><span>Supabase</span><span>Tailwind CSS</span></div>
         <div class="enl"><a href="https://hostal-aguilar.pages.dev" target="_blank" rel="noopener noreferrer">Ver demo ↗</a></div></div>
     </article>
     <article class="proy">
-      <a class="marco" href="https://jireh-pasteleria.pages.dev" target="_blank" rel="noopener noreferrer" aria-label="Ver demo de JIRÉH Pastelería"><img loading="lazy" src="https://abanto.pages.dev/images/projects/jireh-pasteleria.webp" alt="Captura de JIRÉH Pastelería"></a>
+      <a class="marco" href="https://jireh-pasteleria.pages.dev" target="_blank" rel="noopener noreferrer" aria-label="Ver demo de JIRÉH Pastelería"><img loading="lazy" src="proyectos/jireh-pasteleria.webp" alt="Captura de JIRÉH Pastelería"></a>
       <div><span class="n mono">03 · pastelería</span><h3>JIRÉH Pastelería</h3><p>Catálogo de tortas con «Arma tu torta» en vivo y pedidos por WhatsApp.</p>
         <div class="tags"><span>React</span><span>Supabase</span><span>Tailwind CSS</span></div>
         <div class="enl"><a href="https://jireh-pasteleria.pages.dev" target="_blank" rel="noopener noreferrer">Ver demo ↗</a></div></div>
@@ -756,7 +758,10 @@ const carrusel = (function(){
   const norm = t => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
   const esc = t => String(t).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
   let repos = null;
-  try { const c = JSON.parse(localStorage.getItem(CLAVE) || 'null'); if (c && Date.now() - c.t < HORA) repos = c.d; } catch (e) {}
+  // 1º la lista que arma el robot de GitHub Actions cada 6 h (mismo sitio: sin límite de GitHub por visitante)
+  try { const r = await fetch('proyectos.json', {cache: 'no-cache'}); if (r.ok) repos = await r.json(); } catch (e) {}
+  // 2º respaldo: GitHub directo (60 consultas/h por conexión), con caché de 1 h en el navegador
+  if (!repos) try { const c = JSON.parse(localStorage.getItem(CLAVE) || 'null'); if (c && Date.now() - c.t < HORA) repos = c.d; } catch (e) {}
   if (!repos) {
     try {
       const r = await fetch(`https://api.github.com/users/${USER}/repos?per_page=100&sort=pushed`);
@@ -776,8 +781,8 @@ const carrusel = (function(){
     const titulo = usarCab ? cab : r.name.split(/[-_]/).map(w => w[0].toUpperCase() + w.slice(1)).join(' ');
     const t0 = usarCab ? m[2].trim() : d, texto = t0.charAt(0).toUpperCase() + t0.slice(1);
     let tags = (r.topics || []).filter(t => !META.has(t)).map(t => BONITO[t] || t); if (!tags.length && r.language) tags = [r.language];
-    const og = `https://opengraph.githubassets.com/1/${USER}/${r.name}`;
-    return `<article class="proy"><a class="marco" href="${esc(url)}" target="_blank" rel="noopener noreferrer" aria-label="Ver demo de ${esc(titulo)}"><img loading="lazy" src="proyectos/${esc(r.name)}.webp" data-alt="https://abanto.pages.dev/images/projects/${esc(r.name)}.webp|${og}" onerror="var a=this.dataset.alt.split('|'),n=a.shift();this.dataset.alt=a.join('|');if(n)this.src=n" alt="Captura de ${esc(titulo)}"></a>
+    const og = `https://opengraph.githubassets.com/1/${USER}/${r.name}`, foto = r.captura === false ? og : `proyectos/${esc(r.name)}.webp`;
+    return `<article class="proy"><a class="marco" href="${esc(url)}" target="_blank" rel="noopener noreferrer" aria-label="Ver demo de ${esc(titulo)}"><img loading="lazy" src="${foto}" data-alt="${og}" onerror="var n=this.dataset.alt;this.dataset.alt='';if(n)this.src=n" alt="Captura de ${esc(titulo)}"></a>
       <div><span class="n mono">${String(i + 1).padStart(2, '0')} · ${new Date(r.pushed_at).getFullYear()}</span><h3>${esc(titulo)}</h3><p>${esc(texto)}</p>
         <div class="tags">${tags.slice(0, 4).map(t => `<span>${esc(t)}</span>`).join('')}</div>
         <div class="enl"><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Ver demo ↗</a><a href="${esc(codeUrl)}" target="_blank" rel="noopener noreferrer">Código ↗</a></div></div></article>`;

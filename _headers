@@ -13,3 +13,9 @@
 
 /proyectos/*.webp
   Cache-Control: public, max-age=604800, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/proyectos.json
+  Cache-Control: public, max-age=300

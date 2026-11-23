@@ -1,0 +1,49 @@
+name: publicar
+# Publica el sitio en Cloudflare Pages: al subir a main, cada 6 h (para traer proyectos nuevos de GitHub) o a mano.
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: publicar
+  cancel-in-progress: false
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CLOUDFLARE_ACCOUNT_ID: 413140211e3e586eddf279c41f0345d2
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm i --no-save playwright@1.48.2 sharp@0.33.5
+      - run: npx playwright install --with-deps chromium
+      - name: Proyectos de GitHub y capturas
+        run: node scripts/proyectos.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Guardar capturas nuevas en el repo
+        run: |
+          git add proyectos/*.webp
+          if ! git diff --cached --quiet; then
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "proyectos: capturas nuevas [skip ci]"
+            git push
+          fi
+      - name: Carpeta limpia
+        run: |
+          mkdir dist
+          cp index.html 404.html robots.txt sitemap.xml _headers favicon.svg logo.svg frank-avatar.webp proyectos.json dist/
+          cp -r proyectos fonts dist/
+      - name: Subir a Cloudflare Pages
+        if: env.CLOUDFLARE_API_TOKEN != ''
+        run: npx -y wrangler@4 pages deploy dist --project-name frank-abanto --branch main --commit-dirty=true
+      - name: Aviso si falta la llave
+        if: env.CLOUDFLARE_API_TOKEN == ''
+        run: echo "::warning::Falta el secreto CLOUDFLARE_API_TOKEN; no se publico."
