@@ -70,6 +70,11 @@ for (const [nombre, opts] of casos) {
   log(`== ${nombre} == alto ${h}px, desborde horizontal ${overflow}px, pantallas ${i}`);
   errores.forEach((e) => log(`  consola: ${e}`));
   fallidos.forEach((e) => log(`  recurso fallido: ${e}`));
+  // carrusel: ¿cuántos proyectos y cuántas imágenes cargaron de verdad?
+  const proy = await page.evaluate(() => [...document.querySelectorAll('#lista-proy .proy')].map((a) => {
+    const i = a.querySelector('img'); return `${a.querySelector('h3')?.textContent}:${i && i.complete && i.naturalWidth ? 'ok' : 'SIN IMAGEN'}:${(i?.currentSrc || '').split('/').slice(-2).join('/')}`;
+  }));
+  log(`  proyectos (${proy.length}): ${proy.join(' | ')}`);
   // botón flotante: ¿aparece al subir y se esconde al bajar?
   const flota = async (y) => { await page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' }), y); await page.waitForTimeout(500); return page.evaluate(() => document.getElementById('flota')?.classList.contains('ver')); };
   const sube = await flota(vh * 1.5), baja = await flota(vh * 2.2);
