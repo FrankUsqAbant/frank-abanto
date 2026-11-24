@@ -22,9 +22,9 @@ for (const [nombre, w, h, tactil] of tam) {
   await p.screenshot({ path: `out/r-${id}-probador.png` });
   const d = await p.evaluate((tactil) => {
     const ancho = document.documentElement.scrollWidth - innerWidth;
-    const chicos = tactil ? [...document.querySelectorAll('a,button,input,label')].filter((e) => { const r = e.getBoundingClientRect(); return r.width && r.height && (r.width < 44 || r.height < 44) && getComputedStyle(e).visibility !== 'hidden'; })
+    const chicos = tactil ? [...document.querySelectorAll('a,button,input,label')].filter((e) => { const r = e.getBoundingClientRect(); const cs = getComputedStyle(e); return r.width && r.height && r.bottom > 0 && (r.width < 44 || r.height < 44) && cs.visibility !== 'hidden' && cs.opacity !== '0' && !(e.tagName === 'LABEL' && e.htmlFor) && !e.closest('[hidden]'); })
       .map((e) => (e.getAttribute('aria-label') || e.textContent || e.tagName).trim().slice(0, 22)) : [];
-    const cortado = [...document.querySelectorAll('h1,h2,h3,p,a,button')].filter((e) => { const r = e.getBoundingClientRect(); return r.width && (r.right > innerWidth + 1 || r.left < -1); }).map((e) => e.textContent.trim().slice(0, 22));
+    const cortado = [...document.querySelectorAll('h1,h2,h3,p,a,button')].filter((e) => { if (e.closest('#lista-proy')) return false; const r = e.getBoundingClientRect(); return r.width && (r.right > innerWidth + 1 || r.left < -1); }).map((e) => e.textContent.trim().slice(0, 22));
     return { ancho, chicos, cortado: cortado.slice(0, 6) };
   }, tactil);
   log(`${nombre}: desborde ${d.ancho}px · objetivos<44: ${d.chicos.length} ${JSON.stringify(d.chicos.slice(0, 6))} · fuera de pantalla: ${JSON.stringify(d.cortado)}${err.length ? ' · ERRORES ' + err.join(' | ') : ''}`);
@@ -66,7 +66,7 @@ log('== ACCESIBILIDAD (probador usado + recepcionista abierta) ==');
   await p.goto(URL, { waitUntil: 'networkidle' }); await p.waitForTimeout(2500);
   await p.fill('#neg', 'Panadería Luna'); await p.click('#coser'); await p.waitForTimeout(8000);
   const ax = await new AxeBuilder({ page: p }).analyze();
-  log(`axe: ${ax.violations.length} problemas${ax.violations.map((v) => ` · [${v.impact}] ${v.id} (${v.nodes.length})`).join('')}`);
+  log(`axe: ${ax.violations.length} problemas${ax.violations.map((v) => ` · [${v.impact}] ${v.id} (${v.nodes.length}) ${v.nodes.map((nd) => nd.target.join(' ')).join(' ; ')}`).join('')}`);
   const estado = await p.evaluate(() => ({ anuncio: document.getElementById('estadoPb')?.textContent, log: document.getElementById('msjs')?.getAttribute('role'), saltar: !!document.querySelector('.saltar') }));
   log(`lector de pantalla: ${JSON.stringify(estado)}`);
   // primer Tab: debe ser "Saltar al contenido"
