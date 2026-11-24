@@ -41,7 +41,7 @@ img{display:block;max-width:100%}
 /* ---------- navegación ---------- */
 .nav{position:absolute;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;justify-content:space-between;
   padding:18px var(--lado);color:#f4f2ee}
-.flota{position:fixed;right:var(--lado);bottom:22px;z-index:60;background:var(--hilo);color:var(--tinta);font:600 14px var(--sans);
+.flota{position:fixed;right:var(--lado);bottom:22px;z-index:60;min-height:44px;display:inline-flex;align-items:center;background:var(--hilo);color:var(--tinta);font:600 14px var(--sans);
   padding:13px 20px;border-radius:999px;text-decoration:none;box-shadow:0 10px 30px -10px rgba(0,0,0,.6);
   opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .35s,transform .35s}
 .flota.ver{opacity:1;transform:none;pointer-events:auto}
@@ -363,8 +363,8 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
 .probador .web .pag{padding:18px 20px 20px}
 .probador .web nav{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--gris-claro)}
 .probador .web nav strong{font:italic 400 18px var(--serif);color:var(--tinta)}
-.probador .web h4{font:400 clamp(26px,2.6vw,36px)/1 var(--serif);margin:22px 0 10px;max-width:14ch}
-.probador .web h4 em{color:var(--hilo)}
+.probador .web .tit{font:400 clamp(26px,2.6vw,36px)/1 var(--serif);margin:22px 0 10px;max-width:14ch}
+.probador .web .tit em{color:var(--hilo)}
 .probador .web p{font-size:12.5px;line-height:1.5;color:var(--gris-claro);max-width:34ch}
 .probador .web .cta{display:inline-block;margin-top:14px;background:var(--tinta);color:var(--papel);font:600 12px var(--sans);padding:9px 14px;border-radius:999px}
 .probador .web .prods{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
@@ -411,7 +411,7 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
 .probador .chips button,.probador .chips a{min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid #4a463e;background:transparent;color:var(--papel);font:500 14px var(--sans);cursor:pointer;display:inline-flex;align-items:center;text-decoration:none}
 .probador .chips button:hover,.probador .chips a:hover{border-color:var(--papel)}
 .probador .chips a.cita{background:var(--papel);color:var(--tinta);border-color:var(--papel);font-weight:600}
-.probador .nota{margin-top:14px;color:#6f6a61;line-height:1.6}
+.probador .nota{margin-top:14px;color:#a39d92;line-height:1.6}
 .probador .recep .msjs{max-height:340px;overflow-y:auto;padding-right:4px}
 .probador .charla{display:flex;gap:8px;margin-top:14px;position:relative}
 .probador .charla input{flex:1;min-width:0;min-height:48px;background:#0e0d0b;border:1.5px solid #3a362f;border-radius:999px;color:var(--papel);font:400 15px var(--sans);padding:0 18px}
@@ -1087,7 +1087,7 @@ function htmlMuestra(tipo, R){
       <div class="chrome"><b></b><b></b><b></b><span>${esc(slug(nombre))}.pe</span></div>
       <div class="pag">
         <nav class="ap"><strong>${esc(nombre)}</strong><span>Inicio · Catálogo · Contacto</span></nav>
-        <h4 class="ap">${esc(R.frase[0])} <em>${esc(R.frase[1])}.</em></h4>
+        <p class="tit ap">${esc(R.frase[0])} <em>${esc(R.frase[1])}.</em></p>
         <p class="ap">${esc(R.texto)}</p>
         <span class="cta ap">Pedir por WhatsApp ↗</span>
         <div class="prods">${R.prods.map(p => `<div class="ap">${esc(p)}</div>`).join('')}</div>
