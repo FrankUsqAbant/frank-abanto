@@ -38,9 +38,12 @@ Soy **Frank Abanto**, desarrollador web radicado en Cajamarca, Perú. Construyo 
 Página construida en un **único archivo estático (`index.html`)** sin build step ni dependencias externas:
 
 - **Efectos Visuales:** Canvas 2D interactivo (física de puntadas bordadas) y WebGL Fragment Shader (seda viva con iluminación reactiva al cursor).
-- **Auto-adaptación:** Detecta equipos lentos o preferencias de reducción de movimiento (`prefers-reduced-motion`) para ahorrar batería y recursos.
-- **Seguridad:** Aislamiento con `rel="noopener noreferrer"`, sanitización estricta de URLs de la API de GitHub y cabeceras reforzadas (`_headers`).
-- **Despliegue:** Cloudflare Pages (Edge CDN con compresión Brotli y carga instantánea).
+- **El probador:** el visitante escribe su negocio y elige web, asistente o automatización; el hilo le cose una muestra hecha para él.
+- **La recepcionista:** asistente con IA (Cloudflare Workers AI) que atiende consultas, averigua lo que el cliente necesita, guarda la ficha en Notion y avisa por Telegram. Nunca da precios ni plazos.
+- **Auto-adaptación:** detecta equipos lentos, conexiones lentas o «ahorro de datos» y `prefers-reduced-motion`: muestra lo esencial sin WebGL ni animaciones pesadas. El telón de entrada solo aparece en la primera página de cada visita.
+- **Accesibilidad:** enlace «Saltar al contenido», textos para lectores de pantalla, anuncios cortos al coser una muestra y chat como registro accesible.
+- **Proyectos solos:** un robot de GitHub Actions lee cada 5 días los repos con el tema `portfolio`, saca las capturas que falten y publica.
+- **Despliegue:** Cloudflare Pages, automático en cada cambio a `main` (`.github/workflows/publicar.yml`).
 
 ---
 
@@ -48,15 +51,22 @@ Página construida en un **único archivo estático (`index.html`)** sin build s
 
 ```text
 ├── .github/
-│   └── assets/           # Recursos visuales del README (captura Hero)
-├── proyectos/            # Capturas de proyectos en formato WebP
-├── index.html            # Sitio web completo (HTML, CSS y JS integrado)
-├── logo.svg              # Isotipo artesanal oficial
-├── favicon.svg           # Favicon vectorial escalable
-├── frank-avatar.webp     # Fotografía de perfil optimizada
-├── _headers              # Cabeceras de seguridad y caché HTTP
-└── README.md             # Documentación principal
+│   ├── assets/             # Captura del README
+│   └── workflows/
+│       └── publicar.yml    # Publica en Cloudflare: en cada cambio y cada 5 días
+├── fonts/                  # Fuentes propias (sin Google Fonts)
+├── proyectos/              # Capturas de proyectos (las genera el robot)
+├── recepcionista/          # Worker de la recepcionista (IA + Notion + Telegram)
+│   ├── src/index.js
+│   ├── wrangler.jsonc
+│   └── conectar-*.ps1      # Guardan las llaves en Cloudflare sin mostrarlas
+├── scripts/proyectos.mjs   # Arma proyectos.json y las capturas
+├── index.html              # Sitio completo (HTML, CSS y JS en un archivo)
+├── 404.html · robots.txt · sitemap.xml · _headers
+└── logo.svg · favicon.svg · frank-avatar.webp
 ```
+
+Lo que sabe la recepcionista se edita en Notion, en la página «Lo que sabe la recepcionista» (sin tocar código).
 
 ---
 

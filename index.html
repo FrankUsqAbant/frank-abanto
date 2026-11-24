@@ -16,6 +16,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="fonts/instrument-serif-400-italic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
+<script>/* antes de pintar: con conexión lenta o "ahorro de datos" se muestra lo esencial; el telón solo en la 1ª página de la visita */
+try{var c=navigator.connection||{},h=document.documentElement;if(c.saveData||/2g|3g/.test(c.effectiveType||''))h.classList.add('ahorro','sin-telon');if(sessionStorage.getItem('telon'))h.classList.add('sin-telon');sessionStorage.setItem('telon','1')}catch(e){}</script>
 <style>
 /* fuentes propias (antes Google Fonts: dos hojas externas que bloqueaban el primer pintado) */
 @font-face{font-family:"Instrument Serif";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/instrument-serif-400.woff2) format("woff2")}
@@ -196,6 +198,10 @@ footer nav{display:flex;gap:22px}
 #telon{position:fixed;inset:0;z-index:200;background:var(--tinta);color:var(--papel);display:flex;flex-direction:column;justify-content:flex-end;
   padding:0 var(--lado) clamp(28px,6vh,60px);transition:transform .9s cubic-bezier(.76,0,.24,1);animation:telonAdios .01s 4.5s forwards}
 #telon.fuera{transform:translateY(-101%)}
+.sin-telon #telon{display:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+.saltar{position:fixed;left:16px;top:-80px;z-index:300;background:var(--papel);color:var(--tinta);font:600 15px var(--sans);padding:12px 18px;border-radius:999px;text-decoration:none;transition:top .2s}
+.saltar:focus{top:16px}
 #telon b{font-family:var(--serif);font-weight:400;font-style:italic;font-size:clamp(90px,22vw,340px);line-height:.8;letter-spacing:-.04em}
 #telon b small{font-family:var(--mono);font-style:normal;font-size:13px;letter-spacing:.14em;margin-left:14px;color:var(--gris)}
 #telon i{display:block;height:26px;margin-top:22px;border-top:1.5px solid var(--papel);transform-origin:left;animation:mide 1.15s cubic-bezier(.6,0,.2,1) both;
@@ -427,6 +433,7 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
 </style>
 </head>
 <body>
+<a class="saltar" href="#principal">Saltar al contenido</a>
 
 <div id="telon" aria-hidden="true"><b><span id="cuenta">0</span><small>CM · TOMANDO MEDIDAS</small></b><i></i></div>
 <noscript><style>#telon{display:none}</style></noscript>
@@ -444,7 +451,7 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
   <div class="v"><div class="h24"><em>24/7</em><span>en línea · responde en segundos</span></div></div>
 </div>
 
-<main>
+<main id="principal" tabindex="-1">
 <a class="flota" id="flota" href="#probador" data-recep>Escríbeme ↗</a>
 <!-- 1 · HERO -->
 <section class="hero" id="inicio">
@@ -523,14 +530,15 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
           <svg class="puntadas" id="puntadas" aria-hidden="true"></svg>
           <div class="cab-tela"><span class="mono" id="cabIzq">Hecho a medida para</span><span class="mono" id="cabDer">muestra 00</span></div>
           <div class="nombre" id="zonaNombre"><canvas id="lienzoN" aria-hidden="true"></canvas><span id="nombreTxt">tu negocio</span></div>
-          <div class="muestra" id="muestra" aria-live="polite">
+          <div class="muestra" id="muestra">
             <div class="vacio"><b>Aquí se cose tu muestra.</b><span>Escribe tu negocio y pulsa «Coser mi muestra».</span></div>
           </div>
         </div>
 
-        <div class="recep" id="recep" hidden aria-live="polite">
+        <div class="recep" id="recep" hidden>
           <div class="quien"><i aria-hidden="true">F</i><span class="mono">Recepcionista del taller</span></div>
-          <div class="msjs" id="msjs"></div>
+          <div class="msjs" id="msjs" role="log" aria-live="polite" aria-label="Conversación con la recepcionista"></div>
+          <p class="sr" id="estadoPb" role="status"></p>
           <div class="chips" id="chips"></div>
           <form class="charla" id="charla" autocomplete="off">
             <label class="mono" for="txt" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Escribe tu mensaje</label>
@@ -621,6 +629,7 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
 <script>
 const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const raiz = document.documentElement;
+const ahorro = raiz.classList.contains('ahorro');           // conexión lenta o ahorro de datos: sin seda WebGL ni bordado animado
 
 /* ============ motor de bordado: convierte cualquier texto en puntadas ============ */
 function crearBordado(o){
@@ -724,7 +733,7 @@ function crearBordado(o){
   return {preparar: () => { preparar(); arrancar(); }};
 }
 
-if (!quieto) document.fonts.load('italic 400 100px "Instrument Serif"').then(() => document.fonts.ready).then(() => {
+if (!quieto && !ahorro) document.fonts.load('italic 400 100px "Instrument Serif"').then(() => document.fonts.ready).then(() => {
   /* 1 · hero */
   const palabras = [...document.querySelectorAll('#gran .st')];
   const heroB = crearBordado({
@@ -750,7 +759,7 @@ if (!quieto) document.fonts.load('italic 400 100px "Instrument Serif"').then(() 
   });
   etiqueta.preparar();
   /* el telón cuenta hasta 100 y se levanta; entonces empieza a coserse el titular */
-  const telon = document.getElementById('telon'), cuenta = document.getElementById('cuenta'), falta = Math.max(0, 1250 - performance.now());
+  const telon = document.getElementById('telon'), cuenta = document.getElementById('cuenta'), falta = raiz.classList.contains('sin-telon') ? 0 : Math.max(0, 1250 - performance.now());
   const c0 = performance.now(), ci = setInterval(() => { const q = Math.min(1, (performance.now() - c0) / (falta || 1)); cuenta.textContent = Math.round(q * q * (3 - 2 * q) * 100); if (q >= 1) clearInterval(ci); }, 30);
   setTimeout(() => {
     cuenta.textContent = 100; telon.classList.add('fuera'); setTimeout(heroB.preparar, 380);
@@ -759,7 +768,7 @@ if (!quieto) document.fonts.load('italic 400 100px "Instrument Serif"').then(() 
   let pausa; campo.addEventListener('input', () => { txt.textContent = campo.value.trim() || 'tu negocio'; document.getElementById('medidasDe').textContent = txt.textContent; clearTimeout(pausa); pausa = setTimeout(etiqueta.preparar, 260); });
   raiz.classList.add('bordado');
 });
-if (quieto) document.getElementById('negocio').addEventListener('input', e => { document.getElementById('telaTxt').textContent = e.target.value.trim() || 'tu negocio'; });
+if (quieto || ahorro) document.getElementById('negocio').addEventListener('input', e => { document.getElementById('telaTxt').textContent = e.target.value.trim() || 'tu negocio'; });
 
 /* ============ hero: seda viva en WebGL — pliegues que se mueven, luz y hundimiento bajo el cursor ============ */
 function seda(palabras){
@@ -1062,7 +1071,7 @@ const slug = t => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().repla
 let nombre = 'tu negocio', bordado = null, corrida = 0, cuenta = 0;
 
 function bordadoNombre(){
-  if (quieto || !window.crearBordado) return null;
+  if (quieto || ahorro || !window.crearBordado) return null;
   return crearBordado({
     zona: $('zonaNombre'), cv: $('lienzoN'), tope: innerWidth < 700 ? 2200 : 3600, paso: 2, radio: 80,
     dura: 1100, aguja: true, color: '14,13,11', sombra: 'rgba(14,13,11,.16)', grosor: 1, metal: '#8d887e',
@@ -1192,6 +1201,7 @@ $('pbForm').addEventListener('submit', async e => {
   await coserBorde(n);
   await cascada(n);
   await vida(tipo, R, n);
+  if (n === corrida) $('estadoPb').textContent = `Listo: se cosió una muestra de ${TIPOS[tipo]} para ${nombre}. Más abajo te atiende la recepcionista.`;
   if (n !== corrida) return;
   btn.disabled = false; btn.firstChild.textContent = 'Coser otra muestra ';
   recepcionista();
