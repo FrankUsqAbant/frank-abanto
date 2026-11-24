@@ -179,6 +179,11 @@ section{position:relative}
 .cierre .fila{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:clamp(36px,7vh,72px)}
 .cierre .btn{background:var(--tinta);color:var(--papel);font-size:17px;padding:20px 32px}
 .cierre .btn:hover{background:#000}
+/* celulares muy chicos: firma y boton en una sola linea */
+.firma,.nav .pill{white-space:nowrap}
+@media (max-width:380px){.nav .firma{font-size:21px}.nav .pill{padding:10px 13px}.marca-nav{gap:8px}}
+/* celular en horizontal: el titular cabe en la altura y no tapa el encabezado */
+@media (orientation:landscape) and (max-height:520px) and (max-width:960px){.hero{min-height:440px}.hero .pre{font-size:clamp(18px,6vh,30px)}.hero .gran{font-size:21vh;white-space:nowrap}.hero .gran .st{display:inline}}
 footer{background:var(--tinta);color:var(--gris);padding:36px var(--lado);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:13px}
 footer .firma{color:var(--papel);font-size:30px}
 footer nav{display:flex;gap:22px}
