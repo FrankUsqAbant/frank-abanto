@@ -113,7 +113,7 @@ export default {
     const url = new URL(req.url);
     if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: {
       'access-control-allow-origin': permitido, 'access-control-allow-methods': 'POST', 'access-control-allow-headers': 'content-type', 'access-control-max-age': '86400', vary: 'origin' } });
-    if (url.pathname === '/salud') return json({ ok: true });
+    if (url.pathname === '/salud') { const info = await infoTaller(env); return json({ ok: true, fuente: info === INFO_BASE ? 'respaldo' : 'notion', caracteres: info.length }); }
     if (url.pathname !== '/chat' || req.method !== 'POST') return json({ error: 'no' }, 404, permitido);
     if (!permitido) return json({ error: 'origen' }, 403);
 
