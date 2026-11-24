@@ -1,0 +1,11 @@
+{
+  "name": "recepcionista-frank",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-01",
+  "ai": { "binding": "AI" },
+  "vars": { "NOTION_PAGINA": "42203e949ef4810e9407cd3aa89e82ba" },
+  "ratelimits": [
+    { "name": "LIMITE", "namespace_id": "4207", "simple": { "limit": 12, "period": 60 } }
+  ],
+  "observability": { "enabled": true }
+}
